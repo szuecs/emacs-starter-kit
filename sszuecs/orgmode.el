@@ -1,13 +1,12 @@
-(add-to-list 'load-path "~/emacs-libs/org-7.3/lisp")
-
-; org-mode customization
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 ; disable spell checker for this mode
 (add-hook 'org-mode-hook
           (function
            (lambda ()
              (setq flyspell-mode nil))))
 
+
+;;;;;;;;;;;;;;;; org-mode customization
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 ;; use org-remember to add fast short memos 
 ;(org-remember-insinuate) ; what?
