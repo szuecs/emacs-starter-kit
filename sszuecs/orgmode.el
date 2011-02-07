@@ -1,21 +1,12 @@
-; disable spell checker for this mode
+; disable spell checker for this mode, because colors get messy.
 (add-hook 'org-mode-hook
           (function
            (lambda ()
              (setq flyspell-mode nil))))
 
 
-;;;;;;;;;;;;;;;; org-mode customization
+;;;; org-mode customization
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-
-;; use org-remember to add fast short memos 
-;(org-remember-insinuate) ; what?
-(define-key global-map "\C-cr" 'org-remember) ; -> ~/.notes
-
-;; use org-capture to add fast todo items to remember them later
-(require 'org-capture)
-(setq org-default-notes-file (expand-file-name "~/org/notes.org"))
-(define-key global-map "\C-cc" 'org-capture)
 
 ;; specific key mappings
 (global-set-key "\C-cl" 'org-store-link)
@@ -24,13 +15,17 @@
 
 ;; related config
 '(org-return-follows-link t)
-(add-hook 'org-mode-hook 'turn-on-font-lock)  ; Org buffers only
+(add-hook 'org-mode-hook 'turn-on-font-lock) 
+(run-at-time "00:59" 3600 'org-save-all-org-buffers)
+(setq org-default-notes-file (expand-file-name "~/org/notes.org"))
 
-;; todo-lists
+;;;; todo-lists
 (setq org-todo-keywords 
-      '((sequence "TODO(t)" "NEXT(n!)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
+      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
         (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
-        (sequence "OPEN(O!)" "|" "CLOSED(C!)" "REJECTED(R@)")))
+        (sequence "FEEDBACK(f)" "EXPIRED(E@)" "REJECTED(R@)")
+        (sequence "OPEN(O)" "|" "CLOSED(C!)")))
+
 (setq org-todo-keyword-faces
       (quote (("TODO"      :foreground "red"          :weight bold)
               ("NEXT"      :foreground "blue"         :weight bold)
@@ -41,18 +36,272 @@
               ("CANCELLED" :foreground "orangered"    :weight bold)
               ("OPEN"      :foreground "magenta"      :weight bold)
               ("CLOSED"    :foreground "forest green" :weight bold)
+              ("FEEDBACK"  :foreground "magenta"      :weight bold)
+              ("EXPIRED"   :foreground "olivedrab1"   :weight bold)
               ("REJECTED"  :foreground "olivedrab"    :weight bold))))
 
-(setq org-log-done 'time)
-  '(org-enforce-todo-checkbox-dependencies t)
-  '(org-enforce-todo-dependencies t)
-  '(org-deadline-warning-days 7)
+;; auto-tag by state, makes for easy filtering, YAY!
+(setq org-todo-state-tags-triggers
+      (quote (("CANCELLED" ("CANCELLED" . t))
+              ("WAITING" ("WAITING" . t))
+              ("SOMEDAY" ("WAITING" . t))
+              (done      ("WAITING"))
+              ("TODO"    ("WAITING") ("CANCELLED"))
+              ("NEXT"    ("WAITING"))
+              ("DONE"    ("WAITING") ("CANCELLED")))))
+
+; keyboard shortcuts for state selection
 (setq org-use-fast-todo-selection t)
 
-;; tagging
-(setq org-tag-alist '(("@work" . ?w) ("@home" . ?h) ("@elsewhere" . ?e) ("ruby" . ?r) ("framework" . ?f)))
+; make org note the time for everytime I completed recurring tasks 
+(setq org-log-repeat "time")
+; make org note the time for completed tasks
+(setq org-log-done 'time)
+; S-cursor state changes (fixing states) must not trigger updates
+(setq org-treat-S-cursor-todo-selection-as-state-change nil)
 
-;; agenda TODO: customize these to get what I want
+; todo dependencies
+'(org-enforce-todo-checkbox-dependencies t)
+'(org-enforce-todo-dependencies t)
+
+; warn 7 day before deadline ends, p.e. within Agenda
+'(org-deadline-warning-days 7)
+
+;;;; use org-capture to add fast todo items to remember them later
+(require 'org-capture)
+(define-key global-map "\C-cc" 'org-capture)
+;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
+(setq org-capture-templates (quote (("t" "todo" entry (file "~/org/refile.org") "* TODO %?
+%U
+%a" :clock-in t :clock-resume t)
+                                    ("n" "note" entry (file "~/org/refile.org") "* %?                                                                            :NOTE:
+%U
+%a
+:CLOCK:
+:END:" :clock-in t :clock-resume t)
+                                    ("a" "appointment" entry (file+datetree "~/org/diary.org") "* %?
+%U" :clock-in t :clock-resume t)
+                                    ("p" "Phone call" entry (file "~/org/refile.org") "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
+                                    ("w" "org-protocol" entry (file "~/org/refile.org") "* TODO Review %c
+%U" :immediate-finish t :clock-in t :clock-resume t))))
+
+
+;;;; use org-remember to add fast short memos
+(require 'remember)
+(org-remember-insinuate)
+(define-key global-map "\C-cr" 'org-remember) 
+(setq org-remember-store-without-prompt t)
+(setq org-remember-templates (quote
+                              (("todo" ?t "* TODO %?\n %U\n %a\n :CLOCK:\n :END:" nil "Tasks" nil)
+                               ("note" ?n "* %? :NOTE:\n %U\n %a\n :CLOCK:\n :END:" nil "Notes" nil)
+                               ("appointment" ?a "* %? :APPOINTMENT:\n %U" (concat org-directory "todo.org") "Appointments" nil))))
+
+
+;;;; refile - To refile a task to my norang.org file under System
+;             Maintenance I just put the cursor on the task and hit C-c C-w and
+;             enter nor TAB sys TAB RET and it's done.
+;             List them within Agenda mode C-c a r
+; Use IDO for target completion
+(setq org-completion-use-ido t)
+
+; Targets include this file and any file contributing to the agenda - up to 5 levels deep
+(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil
+  :maxlevel . 5))))
+
+; Targets start with the file name - allows creating level 1 tasks
+(setq org-refile-use-outline-path (quote file))
+
+; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
+(setq org-outline-path-complete-in-steps t)
+
+; Allow refile to create parent tasks with confirmation
+(setq org-refile-allow-creating-parent-nodes (quote confirm))
+
+
+;;;; Clocking
+(defun bh/clock-in-to-next (kw)
+  "Switch task from TODO to NEXT when clocking in.
+Skips capture tasks and tasks with subtasks"
+  (if (and (string-equal kw "TODO")
+           (not (and (boundp 'org-capture-mode) org-capture-mode)))
+      (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+            (has-subtask nil))
+        (save-excursion
+          (forward-line 1)
+          (while (and (not has-subtask)
+                      (< (point) subtree-end)
+                      (re-search-forward "^\*+ " subtree-end t))
+            (when (member (org-get-todo-state) org-not-done-keywords)
+              (setq has-subtask t))))
+        (when (not has-subtask)
+          "NEXT"))))
+
+;; Remove empty CLOCK drawers on clock out
+(defun bh/remove-empty-drawer-on-clock-out ()
+  (interactive)
+  (save-excursion
+    (beginning-of-line 0)
+    (org-remove-empty-drawer-at "CLOCK" (point))))
+
+(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
+
+; Resume clocking tasks when emacs is restarted
+(org-clock-persistence-insinuate)
+
+;; Yes it's long... but more is better ;)
+(setq org-clock-history-length 28)
+;; Resume clocking task on clock-in if the clock is open
+(setq org-clock-in-resume t)
+;; Change task state to NEXT when clocking in
+(setq org-clock-in-switch-to-state (quote bh/clock-in-to-next))
+;; Separate drawers for clocking and logs
+(setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK")))
+;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
+(setq org-clock-into-drawer "CLOCK")
+;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
+(setq org-clock-out-remove-zero-time-clocks t)
+;; Clock out when moving task to a done state
+(setq org-clock-out-when-done t)
+;; Save the running clock and all clock history when exiting Emacs, load it on startup
+(setq org-clock-persist (quote history))
+;; Enable auto clock resolution for finding open clocks
+(setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+;; Include current clocking task in clock reports
+(setq org-clock-report-include-clocking-task t)
+
+(setq org-clock-out-remove-zero-time-clocks t)
+
+; Agenda log mode items to display (clock time only by default)
+(setq org-agenda-log-mode-items (quote (clock)))
+; Agenda clock report parameters (no links, 2 levels deep)
+(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
+; Set default column view headings: Task Effort Clock_Summary
+(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
+; global Effort estimate values                                        
+(setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
+
+
+;;;; auto clocking is a bit messy..
+(setq bh/keep-clock-running nil)
+
+(defun bh/clock-in ()
+  (interactive)
+  (setq bh/keep-clock-running t)
+  (if (marker-buffer org-clock-default-task)
+      (unless (org-clock-is-active)
+        (bh/clock-in-default-task))
+    (unless (marker-buffer org-clock-default-task)
+      (org-agenda nil "c"))))
+
+(defun bh/clock-out ()
+  (interactive)
+  (setq bh/keep-clock-running nil)
+  (when (org-clock-is-active)
+    (org-clock-out)))
+
+(defun bh/clock-in-default-task ()
+  (save-excursion
+    (org-with-point-at org-clock-default-task
+      (org-clock-in))))
+
+(defun bh/clock-out-maybe ()
+  (when (and bh/keep-clock-running (not org-clock-clocking-in) (marker-buffer org-clock-default-task))
+    (bh/clock-in-default-task)))
+
+(add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
+
+(defun bh/clock-in-last-task ()
+  "Clock in the interrupted task if there is one"
+  (interactive)
+  (let ((clock-in-to-task (if (org-clock-is-active)
+                 (setq clock-in-to-task (cadr org-clock-history)) 
+                 (setq clock-in-to-task (car org-clock-history)))))
+    (org-with-point-at clock-in-to-task
+      (org-clock-in nil))))
+
+
+;;;; tagging
+(setq org-tag-alist (quote ((:startgroup)
+                            ("@office" . ?o)
+                            ("@home" . ?h)
+                            ("@elsewhere" . ?e)
+                            (:endgroup)
+                            (:startgroup)
+                            ("ruby" . ?r)
+                            ("framework" . ?f)
+                            (:endgroup)
+                            ("PHONE" . ?P)
+                            ("WAITING" . ?w)
+                            ("HOME" . ?H)
+                            ("ORG" . ?O)
+                            ("MARK" . ?M)
+                            ("NOTE" . ?n)
+                            ("CANCELLED" . ?C))))
+
+; Allow setting single tags without the menu
+;(setq org-fast-tag-selection-single-key (quote expert))
+
+;;;; Agenda View
+;; Keep tasks with dates off the global todo lists
+(setq org-agenda-todo-ignore-with-date nil)
+
+;; Allow deadlines which are due soon to appear on the global todo
+;; lists
+(setq org-agenda-todo-ignore-deadlines (quote far))
+
+;; Keep tasks scheduled in the future off the global todo lists
+(setq org-agenda-todo-ignore-scheduled (quote future))
+
+;; Remove completed deadline tasks from the agenda view
+(setq org-agenda-skip-deadline-if-done t)
+
+;; Remove completed scheduled tasks from the agenda view
+(setq org-agenda-skip-scheduled-if-done t)
+
+;; Remove completed items from search results
+(setq org-agenda-skip-timestamp-if-done t)
+
+;; agenda function by http://doc.norang.ca/org-mode.html 12 GTD
+(defun bh/is-project-p ()
+  "Any task with a todo keyword subtask"
+  (let ((has-subtask)
+        (subtree-end (save-excursion (org-end-of-subtree t))))
+    (save-excursion
+      (forward-line 1)
+      (while (and (not has-subtask)
+                  (< (point) subtree-end)
+                  (re-search-forward "^\*+ " subtree-end t))
+        (when (member (org-get-todo-state) org-todo-keywords-1)
+          (setq has-subtask t))))
+    has-subtask))
+
+(defun bh/skip-non-stuck-projects ()
+  "Skip trees that are not stuck projects"
+  (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+         (has-next (save-excursion
+                     (forward-line 1)
+                     (and (< (point) subtree-end)
+                          (re-search-forward "^\\*+ NEXT " subtree-end t)))))
+    (if (and (bh/is-project-p) (not has-next))
+        nil ; a stuck project, has subtasks but no next task
+      subtree-end)))
+
+(defun bh/skip-non-projects ()
+  "Skip trees that are not projects"
+  (let* ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (if (bh/is-project-p)
+        nil
+      subtree-end)))
+
+(defun bh/skip-projects ()
+  "Skip trees that are projects"
+  (let* ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (if (bh/is-project-p)
+        subtree-end
+      nil)))
+
+
+;; TODO: customize these to get what I want
 (setq org-agenda-custom-commands
   '(("P" "Printed agenda"
       ((agenda "" (
@@ -77,30 +326,73 @@
        (ps-number-of-columns 2)
        (ps-landscape-mode t))
       ("~/agenda.ps"))
-    ("O" "Office block agenda"
-      ((agenda "" ((org-agenda-ndays 1))) ;; limits the agenda display to a single day
-        (tags-todo "+PRIORITY=\"A\"")
-        (tags-todo "@work|office")
-        (tags "project+CATEGORY=\"@work\"")
-        (tags "review" ((org-agenda-files '("~/org/todo.org")))) ;; limits the tag search to the file 
-        (todo "WAITING"))
-      ((org-agenda-compact-blocks t))) ;; options set here apply to the entire block
-    ("D" "DEV agenda"
-      ((agenda "" (
-        (org-agenda-ndays 1)
-        (org-deadline-warning-days 7)))
-        (todo "REPORT")
-        (todo "FEATURE")
-        (todo "BUG")))
-    ("H" "Home-Office agenda"
-      ((agenda "" (
-        (org-agenda-ndays 1)
-        (org-deadline-warning-days 7)))
-        (todo "STARTED")
-        (todo "REVIEW")
-        (todo "TODO")
-        (todo "WAITING")
-      )
-    )
+    ("O" "Office block agenda" tags "@work"
+         ((org-agenda-overriding-header "Office")))
+    ("D" "Develop" tags-todo "/!OPEN"
+         ((org-agenda-overriding-header "Develop")))
+    ("w" "Tasks waiting on something" tags "WAITING/!"
+     ((org-use-tag-inheritance nil)
+      (org-agenda-todo-ignore-scheduled nil)
+      (org-agenda-todo-ignore-deadlines nil)
+      (org-agenda-todo-ignore-with-date nil)
+      (org-agenda-overriding-header "Waiting Tasks")))
+    ("n" "Next" tags-todo "-WAITING-CANCELLED/!NEXT"
+     ((org-agenda-overriding-header "Next Tasks")))
+
+    ; FIXME does not show tagged notes from remember
+    ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE"
+     ((org-agenda-todo-ignore-with-date nil)
+      (org-agenda-todo-ignore-deadlines nil)
+      (org-agenda-todo-ignore-scheduled nil)
+      (org-agenda-overriding-header "Tasks to Refile")))
+    ("N" "Notes" tags "NOTE"
+     ((org-agenda-overriding-header "Notes")))
+    
+    ; useful? - see http://doc.norang.ca/org-mode.html
+    ("p" "Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
+     ((org-agenda-skip-function 'bh/skip-non-projects)
+      (org-agenda-overriding-header "Projects")))
+    ("o" "Other (Non-Project) tasks" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
+     ((org-agenda-skip-function 'bh/skip-projects)
+      (org-agenda-overriding-header "Other Non-Project Tasks")))
+    ("A" "Tasks to be Archived" tags "LEVEL=2-REFILE/DONE|CANCELLED"
+     ((org-agenda-overriding-header "Tasks to Archive")))
+    ("h" "Habits" tags "STYLE=\"habit\""
+     ((org-agenda-todo-ignore-with-date nil)
+      (org-agenda-todo-ignore-scheduled nil)
+      (org-agenda-todo-ignore-deadlines nil)
+      (org-agenda-overriding-header "Habits")))
+    ("#" "Stuck Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
+     ((org-agenda-skip-function 'bh/skip-non-stuck-projects)
+      (org-agenda-overriding-header "Stuck Projects")))
+    ("c" "Select default clocking task" tags "LEVEL=2-REFILE"
+     ((org-agenda-skip-function
+       '(org-agenda-skip-subtree-if 'notregexp "^\\*\\* Organization"))
+                      (org-agenda-overriding-header "Set default clocking task with C-u C-u I")))
     ;; other commands go here
-    ))
+    )
+)
+
+;;;; archive
+(setq org-archive-mark-done nil)
+
+;;;; org-babel for graphics
+;(setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+
+(setq org-babel-load-languages (quote ((emacs-lisp . t)
+                                       (dot . t)
+;                                       (ditaa . t)
+                                       (R . t)
+                                       (python . t)
+                                       (ruby . t)
+                                       (gnuplot . t)
+                                       (clojure . t)
+                                       (sh . t))))
+
+;; Do not prompt to confirm evaluation.
+;; This may be dangerous - make sure you understand the consequences
+;; of setting this -- see the docstring for details.
+;(setq org-confirm-babel-evaluate nil)
+
