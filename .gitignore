@@ -21,3 +21,6 @@ session*
 tramp
 \#*
 history
+org-clock-save.el
+sszuecs/.\#*
+sszuecs/sounds
