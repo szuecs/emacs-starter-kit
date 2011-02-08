@@ -15,6 +15,11 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier nil)
 
+(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet-0.6.1c")
+(require 'yasnippet) ;; not yasnippet-bundle
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets")
+
 ;;;; alarm is useful for appt, but should not annoy me!
 (setq visible-bell t)
 ;; don't beep on isearch,..
