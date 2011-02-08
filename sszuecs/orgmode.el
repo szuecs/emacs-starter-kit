@@ -376,21 +376,48 @@ Skips capture tasks and tasks with subtasks"
 ;;;; archive
 (setq org-archive-mark-done nil)
 
-;;;; org-babel for graphics
-;(setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+;;;; reminder with appt
+; Erase all reminders and rebuilt reminders for today from the agenda
+(defun bh/org-agenda-to-appt ()
+  (interactive)
+  (setq appt-time-msg-list nil)
+  (org-agenda-to-appt))
 
-(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+; Rebuild the reminders everytime the agenda is displayed
+(add-hook 'org-finalize-agenda-hook 'bh/org-agenda-to-appt)
 
-(setq org-babel-load-languages (quote ((emacs-lisp . t)
-                                       (dot . t)
-;                                       (ditaa . t)
-                                       (R . t)
-                                       (python . t)
-                                       (ruby . t)
-                                       (gnuplot . t)
-                                       (clojure . t)
-                                       (sh . t))))
+; This is at the end of my .emacs - so appointments are set up when Emacs starts
+(bh/org-agenda-to-appt)
 
+; Activate appointments so we get notifications
+(appt-activate t)
+
+; If we leave Emacs running overnight - reset the appointments one minute after midnight
+(run-at-time "24:01" nil 'bh/org-agenda-to-appt)
+
+;;;; org-babel for graphics -> use latest org-mode version
+;(require 'org-babel) 
+
+; ditaa: http://ditaa.sourceforge.net/
+;(setq org-ditaa-jar-path "~/src/java/ditaa/ditaa0_9.jar")
+
+;(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+
+; (org-babel-do-load-languages
+;  (quote (org-babel-load-languages
+;          ((emacs-lisp . t)
+;           (dot . t)
+;           (ditaa . t)
+;           (R . t)
+;           (python . t)
+;           (ruby . t)
+;           (gnuplot . t)
+;           (clojure . t)
+;           (sh . t)
+;           (sql . nil)
+;           (sqlite . t))))
+; )
+ 
 ;; Do not prompt to confirm evaluation.
 ;; This may be dangerous - make sure you understand the consequences
 ;; of setting this -- see the docstring for details.
