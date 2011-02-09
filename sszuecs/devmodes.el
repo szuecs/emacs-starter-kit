@@ -5,7 +5,18 @@
 ;; FIXME you have to load ess-site and afterwards r-mode
 ; (add-to-list 'auto-mode-alist '("\\.r$" . r-mode))
 
-;(autoload 'ecb "ecb-activate" "Emacs IDE" t)
+;;;; no ELPA for ecb 
+; ecb requires loaded cedet
+(add-to-list 'load-path "~/emacs-libs/cedet-1.0")
+(load-file "~/emacs-libs/cedet-1.0/common/cedet.el")
+(load-file "~/emacs-libs/cedet-1.0/speedbar/speedbar.el")
+(load-file "~/emacs-libs/cedet-1.0/eieio/eieio.el")
+(load-file "~/emacs-libs/cedet-1.0/semantic/semantic.el")
+
+(add-to-list 'load-path "~/emacs-libs/ecb-2.40")
+;(require 'ecb)
+(require 'ecb-autoloads)
+(autoload 'ecb "ecb-activate" "Emacs IDE" t)
 
 ;; perl mode
 (add-hook 'cperl-mode-hook
@@ -16,3 +27,8 @@
 ;; css mode
 (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
 (autoload 'css-mode "css-mode" nil t)
+
+;; auctex
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
