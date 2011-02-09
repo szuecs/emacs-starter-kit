@@ -4,7 +4,12 @@
 ;; spellchecker 
 (require 'auto-dictionary)
 (add-hook 'flyspell-mode-hook '(lambda () (auto-dictionary-mode 1)))
+(setq flyspell-mouse-map
+      (let ((map (make-sparse-keymap)))
+        (define-key map [down-mouse-3] #'flyspell-correct-word)
+        map))
 
+; prefer utf8 encoding
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
@@ -15,6 +20,11 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier nil)
 
+; fuzzy matching within minibuffer
+(require 'ido)
+(setq ido-enable-flex-matching t)
+
+; textmate like tab completion with snippets
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet-0.6.1c")
 (require 'yasnippet) ;; not yasnippet-bundle
 (yas/initialize)
