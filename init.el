@@ -9,7 +9,7 @@
 ;; and brighter; it simply makes everything else vanish."
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
-((menu-bar-mode t))
+(setq menu-bar-mode t)
 ;; Turn off mouse interface early in startup to avoid momentary display
 ;; You really don't need these; trust me.
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
