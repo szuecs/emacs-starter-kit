@@ -32,3 +32,7 @@
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
+
+;; puppet-mode
+(add-to-list 'load-path "~/emacs-libs/puppet")
+(load-file "~/emacs-libs/puppet/puppet-mode-init.el")
