@@ -119,8 +119,8 @@ buffer."
 
 (mapcar '(lambda (binding) (add-to-list 'auto-mode-alist binding))
         '(("\\.rb$" . ruby-mode)
-          ;; ("\\.rhtml$" . rhtml-mode)
-          ;; ("\\.erb" . rhtml-mode)
+          ("\\.rhtml$" . eruby-nxhtml-mumamo-mode)
+          ("\\.erb$" . eruby-nxhtml-mumamo-mode)
           ("\\.rake$" . ruby-mode)
           ("Gemfile$" . ruby-mode)
           ("\\.builder" . ruby-mode)
