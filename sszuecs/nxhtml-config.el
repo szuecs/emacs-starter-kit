@@ -1,4 +1,5 @@
 (load (concat my-libs-dir "nxhtml-2.08/nxhtml/autostart.el"))
-(add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo))
-; erzeugt andere obskure Fehler:
-;(load-file "~/emacs-libs/nxhtml-2.08/nxhtml/nxhtml/nxhtml-mumamo.el")
+
+; TODO nxhtml should be autoloaded so that booting emacs is fast
+;(add-to-list 'load-path "~/emacs-libs/nxhtml-2.08/nxhtml")
+;(autoload 'nxhtml "autostart" "nxhtml mode" t)
