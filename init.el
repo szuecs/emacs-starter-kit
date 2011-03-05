@@ -59,7 +59,7 @@
 (require 'starter-kit-eshell)
 (require 'starter-kit-lisp)
 (require 'starter-kit-perl)
-(require 'starter-kit-ruby)
+;(require 'starter-kit-ruby) ; HACK
 (require 'starter-kit-js)
 
 (regen-autoloads)
