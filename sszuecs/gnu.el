@@ -1,8 +1,4 @@
-(defun system-type-is-gnu ()
-  (interactive)
-  "Return true if system is GNU/Linux-based"
-  (string-equal system-type "gnu/linux")
-)
+(defvar is-gnu-linux (string-equal system-type "gnu/linux"))
 
-(if (system-type-is-gnu)
+(unless (not is-gnu-linux)
 )

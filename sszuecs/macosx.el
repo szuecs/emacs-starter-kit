@@ -1,12 +1,8 @@
-(defun system-type-is-darwin ()
-  (interactive)
-  "Return true if system is darwin-based (Mac OS X)"
-  (string-equal system-type "darwin")
-)
+(defvar is-darwin (string-equal system-type "darwin"))
 
-(if (system-type-is-darwin)
-  ; Best option in Emacs 23 is to revert to Emacs 22 settings 
-  ; (alt is alt, cmd is meta) with this snippet:
+; Best option in Emacs 23 is to revert to Emacs 22 settings 
+; (alt is alt, cmd is meta) with this snippet:
+(unless (not is-darwin)
   (setq mac-option-key-is-meta nil)
   (setq mac-command-key-is-meta t)
   (setq mac-command-modifier 'meta)
