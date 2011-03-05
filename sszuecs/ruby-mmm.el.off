@@ -1,0 +1,59 @@
+;;; For Ruby Programming
+(autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files")
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby"
+  "Set local key defs for inf-ruby in ruby-mode")
+
+(setq ruby-indent-level 2)
+(add-hook 'ruby-mode-hook
+          '(lambda ()
+             (inf-ruby-keys)
+             (define-key ruby-mode-map "\C-m" 'newline-and-indent)
+             (define-key ruby-mode-map "\C-j" 'newline)
+             (and (stringp (buffer-file-name))
+                  (string-match "/mobo\\|tdiary/" (buffer-file-name))
+                  (progn
+                    (setq indent-tabs-mode t)
+                    (setq tab-width ruby-indent-level)))))
+
+;(remove-hook 'before-save-hook 'ruby-mode-set-encoding)
+
+;;; For rd-mode
+(autoload 'rd-mode "rd-mode" "major mode for ruby document formatter RD")
+(add-to-list 'auto-mode-alist '("\\.rd$" . rd-mode))
+
+;;; For mmm-mode
+(require 'mmm-mode nil t)
+(require 'mmm-sample nil t)
+(if (featurep 'mmm-mode)
+    (progn
+      (setq mmm-global-mode 'maybe)
+      (setq mmm-submode-decoration-level 2)
+      (set-face-background 'mmm-default-submode-face "Green")
+      (set-face-foreground 'mmm-default-submode-face "Black")
+;; eRuby
+;      (mmm-add-group 'eruby '((eruby-ruby
+;                               :submode ruby-mode
+;                               :front "<%[=#]?"
+;                               :back "%>")))
+;       (mmm-add-mode-ext-class 'html-helper-mode "\\.erb\\'" 'ruby)
+;       (mmm-add-mode-ext-class 'html-helper-mode "\\.rhtml\\'" 'eruby)
+;       (mmm-add-mode-ext-class 'html-helper-mode nil 'embedded-css)
+;       (mmm-add-mode-ext-class nil "\\.php\\'" 'html-php)
+      ))
+
+; Dimitry Galinsky
+;  (mmm-add-group 'fancy-html '((html-erb
+;    :submode ruby-mode
+;    :match-face (("<%#" . mmm-comment-submode-face)
+;                 ("<%=" . mmm-output-submode-face)
+;                 ("<%"  . mmm-code-submode-face))
+;    :front "<%[#=]?"
+;    :back "%>"
+;    :insert ((?% erb-code       nil @ "<%"  @ " " _ " " @ "%>" @)
+;             (?# erb-comment    nil @ "<%#" @ " " _ " " @ "%>" @)
+;             (?= erb-expression nil @ "<%=" @ " " _ " " @ "%>" @)))))
+;
+;(add-to-list 'mmm-mode-ext-classes-alist '(html-mode nil fancy-html)) 

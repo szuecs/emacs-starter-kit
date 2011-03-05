@@ -10,6 +10,32 @@
 (require 'mmm-mode)
 (setq mmm-global-mode 'maybe)
 
+;; eschulte org mmm experiment
+(mmm-add-classes
+ '((embedded-org-css
+    :submode css
+    :face mmm-declaration-submode-face
+    :delimiter-mode nil
+    :front "#\\+begin_src css"
+    :back "#\\+end_src")
+   (embedded-org-emacs-lisp
+    :submode emacs-lisp
+    :face mmm-declaration-submode-face
+    :delimiter-mode nil
+    :front "#\\+begin_src emacs-lisp[^\n]*"
+    :back "#\\+end_src")
+   (embedded-org-ruby
+    :submode ruby
+    :face mmm-declaration-submode-face
+    :delimiter-mode nil
+    :front "#\\+begin_src ruby"
+    :back "#\\+end_src")))
+(mmm-add-mode-ext-class 'org-mode nil 'embedded-org-css)
+(mmm-add-mode-ext-class 'org-mode nil 'embedded-org-emacs-lisp)
+(mmm-add-mode-ext-class 'org-mode nil 'embedded-org-ruby)
+
+
+;; perl stuff IIRC from mmm-mode page
 (mmm-add-group
  'interchange
  '(
