@@ -1,3 +1,12 @@
+(autoload 'mode-compile "mode-compile"
+  "Command to compile current buffer file based on the major mode" t)
+(define-key ruby-mode-map (kbd "C-c e") 'mode-compile)
+(autoload 'mode-compile-kill "mode-compile"
+  "Command to kill a compilation launched by `mode-compile'" t)
+(define-key ruby-mode-map (kbd "C-c k") 'mode-compile-kill)
+
+;;;;;;;;;;;;; got from dougalcorn github 
+
 ;;(require 'rails)
 (require 'compile)
 ;; from JW 
