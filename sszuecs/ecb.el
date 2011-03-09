@@ -1,10 +1,21 @@
 ;;;; no ELPA for ecb 
 ; ecb requires loaded cedet
 (add-to-list 'load-path "~/emacs-libs/cedet-1.0")
+(add-to-list 'load-path "~/emacs-libs/cedet-1.0/common")
+(add-to-list 'load-path "~/emacs-libs/cedet-1.0/speedbar")
+(add-to-list 'load-path "~/emacs-libs/cedet-1.0/eieio")
+(add-to-list 'load-path "~/emacs-libs/cedet-1.0/semantic")
+
 (load-file "~/emacs-libs/cedet-1.0/common/cedet.el")
 (load-file "~/emacs-libs/cedet-1.0/speedbar/speedbar.el")
 (load-file "~/emacs-libs/cedet-1.0/eieio/eieio.el")
 (load-file "~/emacs-libs/cedet-1.0/semantic/semantic.el")
+
+; autoload <function> <filename> <doc> <interactive f|t|nil> 
+;(autoload 'cedet "cedet" "CEDET Mode" t)
+;(autoload 'speedbar "speedbar" "Speedbar Mode" t)
+;(autoload 'eieio "eieio" "Eieio Mode" t)
+;(autoload 'semantic "semantic" "Semantic Mode" t)
 
 (add-to-list 'load-path "~/emacs-libs/ecb-2.40")
 
