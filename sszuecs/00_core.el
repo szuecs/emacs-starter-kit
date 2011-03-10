@@ -1,5 +1,5 @@
 ;; Start emacs server. Use `emacsclient -t'.
-(server-start)
+;(server-start)
 
 (defvar my-libs-dir "~/emacs-libs/" 
   "Directory for elisp libraries without elpa")
