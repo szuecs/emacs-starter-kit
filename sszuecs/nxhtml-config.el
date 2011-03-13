@@ -1,3 +1,4 @@
+;; supports inline and internal css, Javascript, (x)html, erb, rhtml
 (load (concat my-libs-dir "nxhtml-2.08/nxhtml/autostart.el"))
 
 ; TODO nxhtml should be autoloaded so that booting emacs is fast
