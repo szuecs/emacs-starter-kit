@@ -1,0 +1,4 @@
+#name : import a_module
+#group : method
+# --
+import "${1:module}"

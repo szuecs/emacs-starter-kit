@@ -1,0 +1,4 @@
+#name : include a_module
+#group : method
+# --
+include ${1:module}

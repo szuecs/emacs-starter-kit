@@ -1,0 +1,6 @@
+#name : class Klass {..}
+#group : definitions
+# --
+class ${1:Klass} {
+  $0
+}
