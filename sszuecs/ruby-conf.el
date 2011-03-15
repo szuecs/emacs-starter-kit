@@ -1,3 +1,6 @@
+; use my emacs-libs as git repo.
+(add-to-list 'load-path "~/emacs-libs/rinari")
+
 ;;;;;;;;;;;;; got from dougalcorn github 
 
 ;;(require 'rails)
