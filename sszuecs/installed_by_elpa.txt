@@ -20,7 +20,7 @@ markdown-mode-1.7/
 mediawiki-1.1/
 org-20110313/
 project-local-variables-0.2/
-rinari-2.1/
+rinari-2.1/  <-- if this not work clone from https://github.com/eschulte/rinari.git
 rspec-mode-0.2/
 ruby-compilation-0.7/
 ruby-electric-1.1/
