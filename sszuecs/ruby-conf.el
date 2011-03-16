@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 ; (autoload 'mode-compile "mode-compile"
 ;   "Command to compile current buffer file based on the major mode" t)
 ; (define-key ruby-mode-map (kbd "C-c e") 'mode-compile)
 ; (autoload 'mode-compile-kill "mode-compile"
 ;   "Command to kill a compilation launched by `mode-compile'" t)
 ; (define-key ruby-mode-map (kbd "C-c k") 'mode-compile-kill)
+=======
+; use my emacs-libs as git repo.
+(add-to-list 'load-path "~/emacs-libs/rinari")
+>>>>>>> d0ac56b4789b44168b09e7cc359d3c7d72a12b8f
 
 ;;;;;;;;;;;;; got from dougalcorn github 
 
