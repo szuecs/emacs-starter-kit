@@ -21,9 +21,9 @@
 
 ;;;; todo-lists
 (setq org-todo-keywords 
-      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
+      '((sequence "TODO(t)" "FIXME(f@)" "NEXT(n)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
         (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
-        (sequence "FEEDBACK(f)" "EXPIRED(E@)" "REJECTED(R@)")
+        (sequence "FEEDBACK(F)" "EXPIRED(E@)" "REJECTED(R@)")
         (sequence "OPEN(O)" "|" "CLOSED(C!)")))
 
 (setq org-todo-keyword-faces
