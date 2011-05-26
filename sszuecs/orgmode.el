@@ -21,9 +21,9 @@
 
 ;;;; todo-lists
 (setq org-todo-keywords 
-      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
+      '((sequence "TODO(t)" "FIXME(f@)" "NEXT(n)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
         (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
-        (sequence "FEEDBACK(f)" "EXPIRED(E@)" "REJECTED(R@)")
+        (sequence "FEEDBACK(F)" "EXPIRED(E@)" "REJECTED(R@)")
         (sequence "OPEN(O)" "|" "CLOSED(C!)")))
 
 (setq org-todo-keyword-faces
@@ -91,10 +91,12 @@
 (org-remember-insinuate)
 (define-key global-map "\C-cr" 'org-remember) 
 (setq org-remember-store-without-prompt t)
-(setq org-remember-templates (quote
-                              (("todo" ?t "* TODO %?\n %U\n %a\n :CLOCK:\n :END:" nil "Tasks" nil)
-                               ("note" ?n "* %? :NOTE:\n %U\n %a\n :CLOCK:\n :END:" nil "Notes" nil)
-                               ("appointment" ?a "* %? :APPOINTMENT:\n %U" (concat org-directory "todo.org") "Appointments" nil))))
+(setq org-remember-templates
+      (quote
+       (("todo" ?t "* TODO %?\n %U\n %a\n :CLOCK:\n :END:" nil "Tasks" nil)
+        ("note" ?n "* %? :NOTE:\n %U\n %a\n :CLOCK:\n :END:" nil "Notes" nil)
+        ("appointment" ?a "* %? :APPOINTMENT:\n %U"
+         "Appointments" nil))))
 
 
 ;;;; refile - To refile a task to my norang.org file under System
