@@ -397,31 +397,24 @@ Skips capture tasks and tasks with subtasks"
 ; If we leave Emacs running overnight - reset the appointments one minute after midnight
 (run-at-time "24:01" nil 'bh/org-agenda-to-appt)
 
-;;;; org-babel for graphics -> use latest org-mode version
-;(require 'org-babel) 
+;;;; org-babel for graphics -> use latest org-mode version (no need to import org-babel
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
-; ditaa: http://ditaa.sourceforge.net/
-;(setq org-ditaa-jar-path "~/src/java/ditaa/ditaa0_9.jar")
-
-;(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-
-; (org-babel-do-load-languages
-;  (quote (org-babel-load-languages
-;          ((emacs-lisp . t)
-;           (dot . t)
-;           (ditaa . t)
-;           (R . t)
-;           (python . t)
-;           (ruby . t)
-;           (gnuplot . t)
-;           (clojure . t)
-;           (sh . t)
-;           (sql . nil)
-;           (sqlite . t))))
-; )
+(quote (org-babel-load-languages
+        ((emacs-lisp . t)
+         (dot . t)
+         (ditaa . t)
+         (R . t)
+         (python . t)
+         (ruby . t)
+         (gnuplot . t)
+         (clojure . t)
+         (sh . t)
+         (sql . nil)
+         (sqlite . t))))
  
 ;; Do not prompt to confirm evaluation.
 ;; This may be dangerous - make sure you understand the consequences
 ;; of setting this -- see the docstring for details.
-;(setq org-confirm-babel-evaluate nil)
+(setq org-confirm-babel-evaluate nil)
 
