@@ -1,6 +1,6 @@
-#contributor : Anders Bach Nielsen <abachn@abachn.net>
-#name : <body>...</body>
+# name : <body>...</body>
+# group: tag
 # --
-<body$1>
+<body>
   $0
 </body>

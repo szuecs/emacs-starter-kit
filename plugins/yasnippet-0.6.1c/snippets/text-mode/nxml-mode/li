@@ -1,4 +1,4 @@
-#contributor : Anders Bach Nielsen <abachn@abachn.net>
-#name : <li>...</li>
+# name : <li>...</li>
+# group: list
 # --
 <li>$1</li>
