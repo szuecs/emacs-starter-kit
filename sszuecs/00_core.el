@@ -4,6 +4,8 @@
                 (let ((server-buf (current-buffer)))
                   (bury-buffer)
                   (switch-to-buffer-other-frame server-buf))))
+;; Start emacs server. Use `emacsclient -t'.
+(server-start)
 
 ;; set config variables
 (defvar my-libs-dir "~/emacs-libs/" 

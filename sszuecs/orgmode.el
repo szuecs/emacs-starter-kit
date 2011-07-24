@@ -401,8 +401,11 @@ Skips capture tasks and tasks with subtasks"
 ;;;; org-babel for graphics -> use latest org-mode version (no need to import org-babel
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
-(quote (org-babel-load-languages
-        ((emacs-lisp . t)
+(require 'ob-R)
+(require 'ob-ditaa)
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((emacs-lisp . t)
          (dot . t)
          (ditaa . t)
          (R . t)
@@ -412,7 +415,7 @@ Skips capture tasks and tasks with subtasks"
          (clojure . t)
          (sh . t)
          (sql . nil)
-         (sqlite . t))))
+         (sqlite . t)))
  
 ;; Do not prompt to confirm evaluation.
 ;; This may be dangerous - make sure you understand the consequences
