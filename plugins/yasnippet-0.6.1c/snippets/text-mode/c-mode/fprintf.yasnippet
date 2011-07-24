@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# uuid: FE378349-BD63-4390-9A3B-516F7FF7F413
+# key: fprintf
+# contributor: Translated from textmate snippet by PROGRAM_NAME
+# name: fprintf …
+## condition: "
+# --
+fprintf(${1:stderr}, "${2:%s}\\n"${2/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${2/([^%]|%%)*(%.)?.*/(?2:\);)/}
