@@ -1,12 +1,14 @@
 # -*- mode: snippet -*-
-# contributor : Mads D. Kristensen <madsdk@gmail.com>
-# key : fig
-# group: environments
-# name : \begin{figure} ... \end{figure}
+# uuid: A4483087-156E-486F-91E9-4C0E3112A1A0
+# key: fig
+# contributor: Translated from textmate snippet by PROGRAM_NAME
+# name: fig
+## condition: "text.tex.latex
 # --
-\begin{figure}[htbp]
-  \centering
-  $0
-  \caption{${1:caption}}
-  \label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
-\end{figure}
+\\begin{figure}
+  \\begin{center}
+    \\includegraphics[scale=${2:0.5}]{pictures/${1:pic}.png}
+    \\caption{${3:Untertitel}}
+    \\label{fig:$1}
+  \\end{center}
+\\end{figure}
