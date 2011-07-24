@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# uuid: 46BF99AD-E172-4D49-BCF7-072F4730E1D9
+# key: tra
+# contributor: Translated from textmate snippet by PROGRAM_NAME
+# name: transaction( .. ) { .. }
+## condition: "
+# --
+transaction${1/(^.*?\S.*)|.*/(?1:\()/}${1:true}${1/(^.*?\S.*)|.*/(?1:\))/} { $0 }

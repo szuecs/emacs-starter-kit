@@ -1,5 +1,6 @@
 #name : class << self ... end
 #group : definitions
+#key: cls
 # --
 class << ${self}
   $0
