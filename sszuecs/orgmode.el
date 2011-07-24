@@ -230,6 +230,7 @@ Skips capture tasks and tasks with subtasks"
                             (:endgroup)
                             (:startgroup)
                             ("ruby" . ?r)
+                            ("coding" . ?c)
                             ("framework" . ?f)
                             (:endgroup)
                             ("PHONE" . ?P)
@@ -417,4 +418,12 @@ Skips capture tasks and tasks with subtasks"
 ;; This may be dangerous - make sure you understand the consequences
 ;; of setting this -- see the docstring for details.
 (setq org-confirm-babel-evaluate nil)
+
+;;;; org-mobile - I use a symlink to export my org folder with WebDAV
+;; org-mobile-push / org-mobile-pull
+;(setq org-directory "~/org")
+;(setq org-mobile-directory "/Library/WebServer/WebDAV/org")
+;; mobile org encryption (transparent encryption/decryption using sharedkey)
+;(setq org-mobile-use-encryption t)
+;(setq org-mobile-encryption-password "a_password")
 
