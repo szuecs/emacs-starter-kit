@@ -20,8 +20,6 @@
 
 ;; puppet-mode
 (add-to-list 'load-path "~/emacs-libs/puppet")
-(load-file "~/emacs-libs/puppet/puppet-mode-init.el")
-
-(add-to-list 'load-path "~/emacs-libs/js2")
-(autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(autoload 'puppet-mode "puppet-mode" "Puppet Mode." t)
+(add-to-list 'auto-mode-alist '("\\.pp\\'" . puppet-mode))
+(add-to-list 'interpreter-mode-alist '("puppet" . puppet-mode))
