@@ -430,3 +430,5 @@ Skips capture tasks and tasks with subtasks"
 ;(setq org-mobile-use-encryption t)
 ;(setq org-mobile-encryption-password "a_password")
 
+(add-to-list 'load-path "~/emacs-libs/org-man")
+(require 'org-man)
