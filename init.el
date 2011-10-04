@@ -1,4 +1,6 @@
 ;;; init.el --- Where all the magic begins
+;; Start emacs server. Use `emacsclient -t'.
+(server-start)
 ;;
 ;; Part of the Emacs Starter Kit
 ;;
@@ -77,3 +79,4 @@
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 ;;; init.el ends here
+(put 'narrow-to-region 'disabled nil)
