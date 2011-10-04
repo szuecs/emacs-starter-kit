@@ -1,5 +1,5 @@
 #name : exec {..}
-#group : resources
+#key: exec
 # --
 exec {
   "${1:name}":

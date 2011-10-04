@@ -1,5 +1,5 @@
 #name : package {..}
-#group : resources
+#
 # --
 package "${1:pkg_name}": {
   provider => "${2:providername}",

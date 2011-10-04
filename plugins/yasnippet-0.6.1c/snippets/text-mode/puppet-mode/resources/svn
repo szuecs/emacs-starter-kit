@@ -1,5 +1,5 @@
 #name : vcsrepo {..}
-#group : resources
+#key: svn
 # --
 file { "${1:/path/to/workingcopy}":
   ensure => directory,

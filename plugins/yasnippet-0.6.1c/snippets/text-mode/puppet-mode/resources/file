@@ -1,5 +1,5 @@
-#name : file {.. content => ..}
-#group : resources
+#name : file {.. content => template}
+#key: file
 # --
 file { "${1:name}":
   owner => "${2:root}", group => "$2", mode  => ${3:644},

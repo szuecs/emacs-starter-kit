@@ -1,5 +1,5 @@
 #name : service {..}
-#group : resources
+#key: service
 # --
 service { "${1:name}":
   ensure => 'running',
