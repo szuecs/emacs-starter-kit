@@ -3,6 +3,7 @@
 # contributor: Orestis Markou
 # contributor: Nishio Hirokazu
 # contributor: Yasser González Fernández <yglez@uh.cu>
+# key: cla
 # --
 class ${1:ClassName}(${2:Superclass1,Superclass2}):
     """$3
@@ -39,7 +40,7 @@ class ${1:ClassName}(${2:Superclass1,Superclass2}):
         (mapconcat
          '(lambda (x)
             (if (not (string= (nth 0 x) ""))
-                (concat "self._" (nth 0 x) " = " (nth 0 x))))
+                (concat "self." (nth 0 x) " = " (nth 0 x))))
          (mapcar
           '(lambda (x)
              (mapcar
