@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# uuid: CFE21C25-71DE-48A9-8FE6-2A40D8DF16EF
+# key: pkg
+# contributor: Translated from textmate snippet by PROGRAM_NAME
+# name: Package
+## condition: "
+# --
+${1/^main$|(.+)/(?1:\/*
+	The $1 package implements ... bananas?
+*\/
+)/}package ${1:main}

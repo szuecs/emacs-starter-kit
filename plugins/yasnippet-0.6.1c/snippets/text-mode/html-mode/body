@@ -1,6 +1,5 @@
-#contributor : Jimmy Wu <frozenthrone88@gmail.com>
+#contributor : Jeremiah Dodds <jeremiah.dodds@gmail.com>
 #name : <body>...</body>
-# --
-<body$1>
+<body>
   $0
 </body>

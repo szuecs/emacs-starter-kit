@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# uuid: 92CF0E27-7ED9-4F9B-8061-DD2B38D22893
+# key: de
+# contributor: Translated from textmate snippet by PROGRAM_NAME
+# name: Deferred Call
+## condition: "
+# --
+defer func(${1:params}) {
+	${0:// body}
+}(${2:${1/(.+)?/(?1:values)/}})
