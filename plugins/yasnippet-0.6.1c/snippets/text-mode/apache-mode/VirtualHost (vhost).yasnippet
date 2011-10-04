@@ -1,13 +1,10 @@
 # -*- mode: snippet -*-
-# uuid: 12F1DA22-C375-4DF5-B0C5-87BA2AA38AB0
 # key: vhost
-# contributor: Translated from textmate snippet by PROGRAM_NAME
 # name: Virtual Host
-## condition: "
 # --
-<VirtualHost ${1:example.org}>
+<VirtualHost ${1:example.org}:${2:port}>
 	ServerAdmin webmaster@$1
-	DocumentRoot /www/vhosts/$1
+	DocumentRoot ${3:/var/www/}
 	ServerName $1
 	ErrorLog logs/$1-error_log
 	CustomLog logs/$1-access_log common
