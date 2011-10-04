@@ -1,5 +1,5 @@
 #name : case $fact {..}
-#group : control structure
+#key: case
 # --
 case \$${1:fact} {
   ${2:value}: {
