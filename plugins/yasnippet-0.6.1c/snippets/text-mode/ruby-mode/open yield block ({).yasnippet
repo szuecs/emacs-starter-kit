@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# uuid: 855FC4EF-7B1E-48EE-AD4E-5ECB8ED79D1C
-# key: {
-# contributor: Translated from textmate snippet by PROGRAM_NAME
-# name: Insert { |variable| … }
-## condition: "
-# --
-{ ${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${1:variable}${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}${2:`yas/selected-text`} 
