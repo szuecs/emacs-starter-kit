@@ -1,4 +1,5 @@
 #name : package {..}
+#key: pkg
 #
 # --
 package "${1:pkg_name}": {

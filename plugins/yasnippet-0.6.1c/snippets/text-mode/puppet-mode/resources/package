@@ -1,5 +1,5 @@
 #name : package {..}
-#key: package
+#key: pkg
 # --
 package "${1:pkg_name}": {
   provider => "${2:apt}",
