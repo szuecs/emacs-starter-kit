@@ -1,7 +1,0 @@
-#name : def {..}
-#group : definitions
-# --
-def ${1:function_name}(${2:param} ${3:= "default"})
-{
-  $0
-}

@@ -1,5 +1,5 @@
 #name : node foo { .. }
-#group : definitions
+#key: node
 # --
 node ${1:node_name, "hostname", /hostregex/} {
   include ${2:module}

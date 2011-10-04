@@ -1,4 +1,5 @@
 #name : include a_module
-#group : method
+#key: inc
+#
 # --
 include ${1:module}
