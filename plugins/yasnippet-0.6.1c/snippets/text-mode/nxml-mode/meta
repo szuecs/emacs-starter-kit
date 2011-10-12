@@ -1,4 +1,0 @@
-# name : <meta name="..." content="..." />
-# group: tag
-# --
-<meta name="${1:name}" content="${2:content}" />

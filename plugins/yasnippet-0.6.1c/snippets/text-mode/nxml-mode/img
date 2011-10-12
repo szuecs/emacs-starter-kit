@@ -1,5 +1,0 @@
-#contributor : Anders Bach Nielsen <abachn@abachn.net>
-# name : <img src="..." alt="..." />
-# group: tag
-# --
-<img src="$1" alt="$2" />

@@ -1,6 +1,7 @@
 #contributor : Jimmy Wu <frozenthrone88@gmail.com>
-#name : <head>...</head>
+#name : <ul class="...">...</ul>
+
 # --
-<head>
+<ul class="$1">
   $0
-</head>
+</ul>

@@ -1,4 +1,5 @@
 #contributor : Jimmy Wu <frozenthrone88@gmail.com>
-#name : <title>...</title>
+#name : <li class="...">...</li>
+
 # --
-<title>$1</title>
+<li class="$1">$2</li>

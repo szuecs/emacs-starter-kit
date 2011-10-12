@@ -1,5 +1,4 @@
 #contributor : Jeremiah Dodds <jeremiah.dodds@gmail.com>
-#name : <body>...</body>
-<body>
-  $0
-</body>
+#name : <meta ... />
+# --
+<meta charset="${1:utf-8}" />
