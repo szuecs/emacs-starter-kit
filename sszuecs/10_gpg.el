@@ -5,6 +5,9 @@
 ;    (provide 'secrets)
 ;      (identica-friends-timeline))
 
+(require 'epa-file)
+(epa-file-enable)
+
 ;; 'silent to use symmetric encryption
 ;; nil to ask for users unless specified
 ;; t to always ask for a public-key before encryption
