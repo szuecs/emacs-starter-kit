@@ -17,7 +17,7 @@
               load-path))
 
 (require 'auto-complete)
-(global-auto-complete-mode t)
+;(global-auto-complete-mode t) ; sometimes completion just suck more then it helps
 
 ; (require 'ipython)
 ; (require 'anything-ipython)
