@@ -1,3 +1,7 @@
+; save hooks
+(add-hook 'before-save-hook 'delete-trailing-whitespace)      
+(setq-default show-trailing-whitespace t)      
+
 ;;;; no ELPA for R and ECB
 (add-to-list 'load-path "~/emacs-libs/ess")
 (autoload 'ess-site "ess-site" "Emacs speaks statistics" t)
