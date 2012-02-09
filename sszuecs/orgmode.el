@@ -104,7 +104,7 @@
 ;             enter nor TAB sys TAB RET and it's done.
 ;             List them within Agenda mode C-c a r
 ; Use IDO for target completion
-(setq org-completion-use-ido t)
+;(setq org-completion-use-ido t)
 
 ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
 (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil

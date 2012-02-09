@@ -63,7 +63,7 @@
 (defun ruby-autotest-run-file ()
   (interactive)
   (save-window-excursion
-    (switch-to-buffer 
+    (switch-to-buffer  
      (get-buffer (ido-completing-read 
                   "Enter buffer to run tests for: " 
                   (mapcar (lambda (buffer) (buffer-name buffer)) (buffer-list))

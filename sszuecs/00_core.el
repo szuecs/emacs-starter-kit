@@ -19,6 +19,6 @@
 (prefer-coding-system 'utf-8)
 
 ; fuzzy matching within minibuffer
-(require 'ido)
-(setq ido-enable-flex-matching t)
+;(require 'ido)
+;(setq ido-enable-flex-matching t)
 
