@@ -1,8 +1,8 @@
 ;
-; easy_install rope 
+; easy_install rope
 ; easy_install ropemode
 ; easy_install ropemacs # did not work
-; hg clone http://bitbucket.org/agr/ropemacs 
+; hg clone http://bitbucket.org/agr/ropemacs
 ; cd ropemacs && python setup.py install
 ; git clone https://github.com/pinard/Pymacs.git
 ;   make
@@ -17,7 +17,7 @@
               load-path))
 
 (require 'auto-complete)
-;(global-auto-complete-mode t) ; sometimes completion just suck more then it helps
+;(global-auto-complete-mode t)
 
 ; (require 'ipython)
 ; (require 'anything-ipython)
@@ -25,14 +25,14 @@
 ;                                 (define-key py-mode-map (kbd "M-<tab>") 'anything-ipython-complete)))
 ; (add-hook 'ipython-shell-hook #'(lambda ()
 ;                                   (define-key py-mode-map (kbd "M-<tab>") 'anything-ipython-complete)))
- 
+
 (defadvice py-execute-buffer (around python-keep-focus activate)
   "return focus to python code buffer"
   (save-excursion ad-do-it))
- 
-(setenv "PYMACS_PYTHON" "python2.7") 
+
+(setenv "PYMACS_PYTHON" "python2.7")
 
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
- 
+
 (provide 'python-programming)
