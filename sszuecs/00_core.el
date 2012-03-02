@@ -8,9 +8,9 @@
 (server-start)
 
 ;; set config variables
-(defvar my-libs-dir "~/emacs-libs/" 
+(defvar my-libs-dir "~/emacs-libs/"
   "Directory for elisp libraries without elpa")
-(defvar my-config-dir "~/.emacs.d/sszuecs/" 
+(defvar my-config-dir "~/.emacs.d/sszuecs/"
   "Directory for elisp config files")
 
 ; prefer utf8 encoding
@@ -21,4 +21,8 @@
 ; fuzzy matching within minibuffer
 ;(require 'ido)
 ;(setq ido-enable-flex-matching t)
+
+; showing line-numbers on the left - CPU load 100%
+(require 'linum-off)
+(global-linum-mode 1)
 
