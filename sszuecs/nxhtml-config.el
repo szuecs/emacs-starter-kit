@@ -5,5 +5,5 @@
 ;(add-to-list 'load-path "~/emacs-libs/nxhtml-2.08/nxhtml")
 ;(autoload 'nxhtml "autostart" "nxhtml mode" t)
 
-; use yasnippet
-(yas/define-snippets 'nxhtml-mode nil 'html-mode)
+;; yasnippet can use text-mode/html-mode/ instead of /nxhtml-mode or /nxml-mode
+(yas/define-snippets 'nxhtml-mode nil 'html5-mode)
