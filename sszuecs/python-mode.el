@@ -26,6 +26,7 @@
 ; (add-hook 'ipython-shell-hook #'(lambda ()
 ;                                   (define-key py-mode-map (kbd "M-<tab>") 'anything-ipython-complete)))
 
+; memory leak?
 (defadvice py-execute-buffer (around python-keep-focus activate)
   "return focus to python code buffer"
   (save-excursion ad-do-it))
