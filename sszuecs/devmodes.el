@@ -1,11 +1,19 @@
 ; save hooks
-(add-hook 'before-save-hook 'delete-trailing-whitespace)      
-(setq-default show-trailing-whitespace t)      
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq-default show-trailing-whitespace t)
 
-;;;; no ELPA for R and ECB
+; ESS / R
 (add-to-list 'load-path "~/emacs-libs/ess")
 (autoload 'ess-site "ess-site" "Emacs speaks statistics" t)
-(setq inferior-R-program-name "/usr/local/bin/r")
+(setq inferior-R-program-name "/usr/bin/R")
+(setq ess-eval-visibly-p nil) ;otherwise C-c C-r (eval region) takes forever
+(setq ess-ask-for-ess-directory nil) ;otherwise you are prompted each time you start an interactive R session
+(require 'ess-eldoc) ;to show function arguments while you are typing them
+
+(add-to-list 'load-path "~/emacs-libs/r-autoyas")
+(require 'r-autoyas)
+
+
 ;; FIXME you have to load ess-site and afterwards r-mode
 ; (add-to-list 'auto-mode-alist '("\\.r$" . r-mode))
 
