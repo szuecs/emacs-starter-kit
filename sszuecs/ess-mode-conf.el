@@ -2,7 +2,6 @@
 ; load
 (add-to-list 'load-path "~/emacs-libs/ess/lisp")
 (autoload 'ess-site "ess-site" "Emacs speaks statistics" t)
-(require 'ess-site)
 (add-to-list 'auto-mode-alist '("\\.r$" . r-mode))
 (add-to-list 'auto-mode-alist '("\\.rd\\'" . Rd-mode))
 ; config
@@ -14,7 +13,10 @@
 (setf ess-execute-in-process-buffer 1)
 (setq ess-history-directory "~/.R/")
 (setq ess-use-auto-complete t)
-(R) ;start R in its own buffer
+
+(add-hook 'ess-mode-hook
+          (lambda ()
+            (R))) ;start R in its own buffer
 
 ;;; load ess additional functions
 ; data inspection by tooltip within ess-buffer
