@@ -16,9 +16,6 @@
                     )
               load-path))
 
-(require 'auto-complete)
-;(global-auto-complete-mode t)
-
 ; (require 'ipython)
 ; (require 'anything-ipython)
 ; (add-hook 'python-mode-hook #'(lambda ()
