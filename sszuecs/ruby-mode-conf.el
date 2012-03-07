@@ -1,16 +1,16 @@
 ; use my emacs-libs as git repo.
 (add-to-list 'load-path "~/emacs-libs/rinari")
 
-;;;;;;;;;;;;; got from dougalcorn github 
+;;;;;;;;;;;;; got from dougalcorn github
 
 ;;(require 'rails)
 (require 'compile)
-;; from JW 
+;; from JW
 ;; (add-to-list 'compilation-error-regexp-alist
 ;;              '("^\\(Failure\\|Error\\) occurred in .*\\[\\([^:]+\\):\\([0-9]+\\)\\]" 2 3))
-;(add-to-list 'compilation-error-regexp-alist 
+;(add-to-list 'compilation-error-regexp-alist
 ;             '("test[a-zA-Z0-9_]*([A-Z][a-zA-Z0-9_]*) \\[\\(.*\\):\\([0-9]+\\)\\]:" 1 2))
-;; after much consternation, something is getting a bad regexp into this list that breaks matching on ruby tests.  
+;; after much consternation, something is getting a bad regexp into this list that breaks matching on ruby tests.
 (setq compilation-error-regexp-alist
       '(("\\(\\([^ \n\t:\[]+[a-zA-Z]\\):\\([0-9]+\\)\\)" 2 3 nil 2 1)
         ("\\[\\(\\([^:]+[a-zA-Z]\\):\\([0-9]+\\)\\)\\]:" 2 3 nil 2 1)
@@ -33,7 +33,7 @@
      "Toggle between inferior-ruby-mode and compilation-mode"
      (interactive)
      (cond
-      ((string-equal major-mode "compilation-mode") 
+      ((string-equal major-mode "compilation-mode")
        (progn (goto-char (point-max)) (toggle-read-only -1) (inferior-ruby-mode) ))
       ((string-equal major-mode "inferior-ruby-mode") (compilation-mode))))
 
@@ -63,9 +63,9 @@
 (defun ruby-autotest-run-file ()
   (interactive)
   (save-window-excursion
-    (switch-to-buffer  
-     (get-buffer (ido-completing-read 
-                  "Enter buffer to run tests for: " 
+    (switch-to-buffer
+     (get-buffer (ido-completing-read
+                  "Enter buffer to run tests for: "
                   (mapcar (lambda (buffer) (buffer-name buffer)) (buffer-list))
                   nil t nil nil (buffer-name (current-buffer)))))
     (set-buffer-modified-p t)
