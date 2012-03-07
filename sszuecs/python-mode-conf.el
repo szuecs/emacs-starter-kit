@@ -30,7 +30,9 @@
 
 (setenv "PYMACS_PYTHON" "python2.7")
 
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
+(add-hook 'python-mode-hook
+          (lambda ()
+                  (require 'pymacs)
+                  (pymacs-load "ropemacs" "rope-")))
 
 (provide 'python-programming)
