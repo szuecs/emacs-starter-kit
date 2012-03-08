@@ -16,6 +16,7 @@
                     )
               load-path))
 
+(setq python-check-command "pyflakes") ;; % pip install pyflakes
 ; (require 'ipython)
 ; (require 'anything-ipython)
 ; (add-hook 'python-mode-hook #'(lambda ()
