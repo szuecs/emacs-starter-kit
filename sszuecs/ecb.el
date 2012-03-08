@@ -24,13 +24,3 @@
 (autoload 'ecb "ecb-activate" "Emacs IDE" t)
 (setq ecb-tip-of-the-day nil)
 
-;;; do I want this hook or autoload?
-; (require 'ecb)
-; (add-hook 'ecb-activate-hook
-;           (lambda ()
-;             (let ((compwin-buffer (ecb-get-compile-window-buffer)))
-;               (if (not (and compwin-buffer
-;                             (ecb-compilation-buffer-p compwin-buffer)))
-;                   (ecb-toggle-compile-window -1)))))
-; (ecb-activate)
-
