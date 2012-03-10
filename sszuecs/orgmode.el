@@ -14,13 +14,13 @@
 (global-set-key "\C-cb" 'org-iswitchb)        ; switch buffer
 
 ;; related config
-'(org-return-follows-link t)
-(add-hook 'org-mode-hook 'turn-on-font-lock) 
+(setq org-return-follows-link t)
+(add-hook 'org-mode-hook 'turn-on-font-lock)
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 (setq org-default-notes-file (expand-file-name "~/org/notes.org"))
 
 ;;;; todo-lists
-(setq org-todo-keywords 
+(setq org-todo-keywords
       '((sequence "TODO(t)" "FIXME(f@)" "NEXT(n)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
         (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
         (sequence "FEEDBACK(F)" "EXPIRED(E@)" "REJECTED(R@)")
@@ -53,24 +53,24 @@
 ; keyboard shortcuts for state selection
 (setq org-use-fast-todo-selection t)
 
-; make org note the time for everytime I completed recurring tasks 
+; make org note the time for everytime I completed recurring tasks
 (setq org-log-repeat "time")
 ; make org note the time for completed tasks
 (setq org-log-done 'time)
 ; S-cursor state changes (fixing states) must not trigger updates
 (setq org-treat-S-cursor-todo-selection-as-state-change nil)
 
-; todo dependencies
-'(org-enforce-todo-checkbox-dependencies t)
-'(org-enforce-todo-dependencies t)
+; dependencies of nested TODO-items and nested checkboxes
+(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies t)
 
 ; warn 7 day before deadline ends, p.e. within Agenda
 '(org-deadline-warning-days 7)
 
-;;;; use org-capture to add fast todo items to remember them later
+;;;; use org-capture to add fast todo-items to remember them later
 (require 'org-capture)
 (define-key global-map "\C-cc" 'org-capture)
-;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
+;; Capture templates for: TODO-tasks, Notes, appointments, phone calls, and org-protocol
 (setq org-capture-templates (quote (("t" "todo" entry (file "~/org/refile.org") "* TODO %?
 %U
 %a" :clock-in t :clock-resume t)
@@ -89,7 +89,7 @@
 ;;;; use org-remember to add fast short memos
 (require 'remember)
 (org-remember-insinuate)
-(define-key global-map "\C-cr" 'org-remember) 
+(define-key global-map "\C-cr" 'org-remember)
 (setq org-remember-store-without-prompt t)
 (setq org-remember-templates
       (quote
@@ -179,7 +179,7 @@ Skips capture tasks and tasks with subtasks"
 (setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
 ; Set default column view headings: Task Effort Clock_Summary
 (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
-; global Effort estimate values                                        
+; global Effort estimate values
 (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
 
 
@@ -216,7 +216,7 @@ Skips capture tasks and tasks with subtasks"
   "Clock in the interrupted task if there is one"
   (interactive)
   (let ((clock-in-to-task (if (org-clock-is-active)
-                 (setq clock-in-to-task (cadr org-clock-history)) 
+                 (setq clock-in-to-task (cadr org-clock-history))
                  (setq clock-in-to-task (car org-clock-history)))))
     (org-with-point-at clock-in-to-task
       (org-clock-in nil))))
@@ -245,14 +245,14 @@ Skips capture tasks and tasks with subtasks"
 ;(setq org-fast-tag-selection-single-key (quote expert))
 
 ;;;; Agenda View
-;; Keep tasks with dates off the global todo lists
+;; Keep tasks with dates off the global todo-lists
 (setq org-agenda-todo-ignore-with-date nil)
 
-;; Allow deadlines which are due soon to appear on the global todo
+;; Allow deadlines which are due soon to appear on the global-todo
 ;; lists
 (setq org-agenda-todo-ignore-deadlines (quote far))
 
-;; Keep tasks scheduled in the future off the global todo lists
+;; Keep tasks scheduled in the future off the global todo-lists
 (setq org-agenda-todo-ignore-scheduled (quote future))
 
 ;; Remove completed deadline tasks from the agenda view
@@ -304,9 +304,27 @@ Skips capture tasks and tasks with subtasks"
       nil)))
 
 
-;; TODO: customize these to get what I want
 (setq org-agenda-custom-commands
-  '(("P" "Printed agenda"
+  '(("O" "Office block agenda"
+       ((agenda "" (
+         (org-agenda-ndays 7)                     ;; 7 days agenda
+         (org-deadline-warning-days 14)           ;; 14 day advanced warning for deadlines
+         (org-agenda-start-on-weekday nil)        ;; calendar begins today
+         (org-agenda-scheduled-leaders '("" ""))
+         (org-agenda-prefix-format "%t%s")
+       ))
+       (todo "TODO"                               ;; todos sorted by context
+        ((org-agenda-prefix-format "[ ] %T: ")
+         (org-agenda-sorting-strategy '(tag-up priority-down))
+         (org-agenda-todo-keyword-format "")
+         (org-agenda-with-colors nil)
+         (org-agenda-compact-blocks t)
+         (org-agenda-remove-tags t)
+         (org-agenda-overriding-header "\nTasks by Context\n------------------\n")))
+    ) nil ("agenda_office.html" "agenda_office.txt" "agenda_office.ps")) ; "agenda_office.ics")) ; C-c a e
+
+;; TODO: customize following Agenda listings to fit my needs
+    ("P" "Printed agenda"
       ((agenda "" (
          (org-agenda-ndays 7)                     ;; overview of appointments
          (org-agenda-start-on-weekday nil)        ;; calendar begins today
@@ -329,8 +347,6 @@ Skips capture tasks and tasks with subtasks"
        (ps-number-of-columns 2)
        (ps-landscape-mode t))
       ("~/agenda.ps"))
-    ("O" "Office block agenda" tags "@work"
-         ((org-agenda-overriding-header "Office")))
     ("D" "Develop" tags-todo "/!OPEN"
          ((org-agenda-overriding-header "Develop")))
     ("w" "Tasks waiting on something" tags "WAITING/!"
@@ -350,7 +366,7 @@ Skips capture tasks and tasks with subtasks"
       (org-agenda-overriding-header "Tasks to Refile")))
     ("N" "Notes" tags "NOTE"
      ((org-agenda-overriding-header "Notes")))
-    
+
     ; useful? - see http://doc.norang.ca/org-mode.html
     ("p" "Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
      ((org-agenda-skip-function 'bh/skip-non-projects)
@@ -416,7 +432,7 @@ Skips capture tasks and tasks with subtasks"
          (sh . t)
          (sql . nil)
          (sqlite . t)))
- 
+
 ;; Do not prompt to confirm evaluation.
 ;; This may be dangerous - make sure you understand the consequences
 ;; of setting this -- see the docstring for details.
