@@ -31,6 +31,10 @@
 
 (setenv "PYMACS_PYTHON" "python2.7")
 
+(font-lock-add-keywords 'python-mode
+                        '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
+                           1 font-lock-warning-face t)))
+
 (add-hook 'python-mode-hook
           (lambda ()
                   (require 'pymacs)

@@ -1,6 +1,10 @@
 ; use my emacs-libs as git repo.
 (add-to-list 'load-path "~/emacs-libs/rinari")
 
+(font-lock-add-keywords 'ruby-mode
+                        '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
+                           1 font-lock-warning-face t)))
+
 ;;;;;;;;;;;;; got from dougalcorn github
 
 ;;(require 'rails)
