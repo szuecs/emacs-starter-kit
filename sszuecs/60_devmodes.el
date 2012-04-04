@@ -20,5 +20,9 @@
       ac-quick-help-delay 1.5
       ac-quick-help-prefer-pos-tip t
       ac-use-quick-help nil
- )
+)
+
+(add-to-list 'load-path "~/emacs-libs/expand-region")
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
