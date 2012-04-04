@@ -1,9 +1,14 @@
 ;; dispatch
 (autoload 'js-mode "js" "Start js-mode" t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-;(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-;(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
+;(add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
+;(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+
+(add-to-list 'load-path "~/emacs-libs/js2")
+(add-to-list 'load-path "~/emacs-libs/js2-refactor")
+(add-to-list 'load-path "~/emacs-libs/mark-multiple")
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 
 ;; js stuff
 (add-hook 'js-mode-hook 'moz-minor-mode)
@@ -40,6 +45,12 @@
 ;; js2 stuff
 (eval-after-load 'js2-mode
   '(progn
+     (require 'mark-more-like-this)
+;     (require 'rename-sgml-tag)
+;     (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)
+
+     (require 'js2-refactor)
+     (define-key js2-mode-map (kbd "C-c C-r") 'js2-rename-var)
      (define-key js2-mode-map (kbd "TAB") (lambda()
                                             (interactive)
                                             (let ((yas/fallback-behavior 'return-nil))

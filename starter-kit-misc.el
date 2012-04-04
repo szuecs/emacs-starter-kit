@@ -53,7 +53,7 @@
 (auto-compression-mode t)
 
 ;; Enable syntax highlighting for older Emacsen that have it off
-(global-font-lock-mode t)
+;(global-font-lock-mode t)
 
 ;; Save a list of recent files visited.
 (recentf-mode 1)
