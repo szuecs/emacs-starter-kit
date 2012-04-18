@@ -1,11 +1,11 @@
 ;; open the files designated by emacsclient in their own frame
-(add-hook 'server-switch-hook
-              (lambda nil
-                (let ((server-buf (current-buffer)))
-                  (bury-buffer)
-                  (switch-to-buffer-other-frame server-buf))))
+;(add-hook 'server-switch-hook
+;              (lambda nil
+;                (let ((server-buf (current-buffer)))
+;                  (bury-buffer)
+;                  (switch-to-buffer-other-frame server-buf))))
 ;; Start emacs server. Use `emacsclient -t'.
-(server-start)
+;(server-start)
 
 ;; set config variables
 (defvar my-libs-dir "~/emacs-libs/"
