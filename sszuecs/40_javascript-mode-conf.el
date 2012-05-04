@@ -21,7 +21,7 @@
 ;;
 ;; js2 config
 ;;
-(add-hook 'js2-mode-hook 'esk-paredit-nonlisp)
+;(add-hook 'js2-mode-hook 'esk-paredit-nonlisp) ; paredit does not work with js2-mode :(
 (add-hook 'js2-mode-hook 'run-coding-hook)
 (eval-after-load 'js2-mode
   '(progn
