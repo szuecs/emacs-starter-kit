@@ -23,5 +23,5 @@
 ;(setq ido-enable-flex-matching t)
 
 ; showing line-numbers on the left - CPU load 100%
-(require 'linum-off)
-(global-linum-mode 1)
+;(require 'linum-off)
+;(global-linum-mode 1)
