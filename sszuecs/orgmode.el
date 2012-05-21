@@ -1,23 +1,23 @@
+; use git repo: git clone git://repo.or.cz/org-mode.git
+(add-to-list 'load-path "~/emacs-libs/org-mode/lisp")
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+;(add-to-list 'auto-mode-alist '("\\.org\\'" . org))
+
 ; disable spell checker for this mode, because colors get messy.
 (add-hook 'org-mode-hook
-          (function
-           (lambda ()
-             (setq flyspell-mode nil))))
-
+          (lambda ()
+            (global-set-key "\C-cl" 'org-store-link)
+            (global-set-key "\C-ca" 'org-agenda)
+            (global-set-key "\C-cb" 'org-iswitchb)        ; switch buffer
+            'turn-on-font-lock
+            (setq flyspell-mode nil)))
 
 ;;;; org-mode customization
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-
-;; specific key mappings
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)        ; switch buffer
-
 ;; related config
 (setq org-return-follows-link t)
-(add-hook 'org-mode-hook 'turn-on-font-lock)
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
-(setq org-default-notes-file (expand-file-name "~/org/notes.org"))
+(setq org-default-notes-file (expand-file-name (concat my-orgfile-dir "notes.org")))
 
 ;;;; todo-lists
 (setq org-todo-keywords
@@ -71,18 +71,18 @@
 (require 'org-capture)
 (define-key global-map "\C-cc" 'org-capture)
 ;; Capture templates for: TODO-tasks, Notes, appointments, phone calls, and org-protocol
-(setq org-capture-templates (quote (("t" "todo" entry (file "~/org/refile.org") "* TODO %?
+(setq org-capture-templates (quote (("t" "todo" entry (file (concat my-orgfile-dir "refile.org")) "* TODO %?
 %U
 %a" :clock-in t :clock-resume t)
-                                    ("n" "note" entry (file "~/org/refile.org") "* %?                                                                            :NOTE:
+                                    ("n" "note" entry (file (concat my-orgfile-dir "refile.org")) "* %?                                                                            :NOTE:
 %U
 %a
 :CLOCK:
 :END:" :clock-in t :clock-resume t)
-                                    ("a" "appointment" entry (file+datetree "~/org/diary.org") "* %?
+                                    ("a" "appointment" entry (file+datetree (concat my-orgfile-dir "diary.org")) "* %?
 %U" :clock-in t :clock-resume t)
-                                    ("p" "Phone call" entry (file "~/org/refile.org") "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
-                                    ("w" "org-protocol" entry (file "~/org/refile.org") "* TODO Review %c
+                                    ("p" "Phone call" entry (file (concat my-orgfile-dir "refile.org")) "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
+                                    ("w" "org-protocol" entry (file (concat my-orgfile-dir "refile.org")) "* TODO Review %c
 %U" :immediate-finish t :clock-in t :clock-resume t))))
 
 
@@ -105,6 +105,9 @@
 ;             List them within Agenda mode C-c a r
 ; Use IDO for target completion
 ;(setq org-completion-use-ido t)
+
+; src
+(setq org-src-fontify-natively t)
 
 ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
 (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil
@@ -419,19 +422,26 @@ Skips capture tasks and tasks with subtasks"
 
 (require 'ob-R)
 (require 'ob-ditaa)
+(setq org-plantuml-jar-path
+      (expand-file-name "~/src/plantuml/plantuml.jar"))
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((emacs-lisp . t)
+         (clojure . t)
          (dot . t)
          (ditaa . t)
-         (R . t)
-         (python . t)
-         (ruby . t)
          (gnuplot . t)
-         (clojure . t)
+         (plantuml . t)
+         (python . t)
+         (R . t)
+         (ruby . t)
          (sh . t)
          (sql . nil)
          (sqlite . t)))
+
+;; code block fontification
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
 
 ;; Do not prompt to confirm evaluation.
 ;; This may be dangerous - make sure you understand the consequences
@@ -448,3 +458,7 @@ Skips capture tasks and tasks with subtasks"
 
 (add-to-list 'load-path "~/emacs-libs/org-man")
 (require 'org-man)
+
+; last stmt
+(setq org-log-done t)
+

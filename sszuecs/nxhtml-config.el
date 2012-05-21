@@ -6,4 +6,4 @@
 ;(autoload 'nxhtml "autostart" "nxhtml mode" t)
 
 ;; yasnippet can use text-mode/html-mode/ instead of /nxhtml-mode or /nxml-mode
-(yas/define-snippets 'nxhtml-mode nil 'html5-mode)
+;(yas/define-snippets 'nxhtml-mode nil 'html5-mode)

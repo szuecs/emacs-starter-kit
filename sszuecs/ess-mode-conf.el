@@ -19,9 +19,22 @@
             (R))) ;start R in its own buffer
 
 ;;; load ess additional functions
-; data inspection by tooltip within ess-buffer
+; r debugger
+(require 'ess-tracebug)
+(add-hook 'ess-post-run-hook 'ess-tracebug t)
+(define-key ess-mode-map "\M-]" 'next-error)
+(define-key ess-mode-map "\M-[" 'previous-error)
+(define-key inferior-ess-mode-map "\M-]" 'next-error-no-select)
+(define-key inferior-ess-mode-map "\M-[" 'previous-error-no-select)
+(define-key compilation-minor-mode-map [(?n)] 'next-error-no-select)
+(define-key compilation-minor-mode-map [(?p)] 'previous-error-no-select)
+
+                                        ;
+data inspection by tooltip within ess-buffer
+(add-to-list 'load-path "~/emacs-libs/ess-R-object-tooltip")
+;(autoload 'ess-R-object-tooltip "ess-R-object-tooltip" "ess R tooltips" t)
 (require 'ess-R-object-tooltip)
-(define-key ess-mode-map (kbd "C-c C-g") 'ess-R-object-tooltip)
+;(define-key ess-mode-map (kbd "C-c C-g") 'ess-R-object-tooltip)
 
 ; ess-eldoc
 ; to show function arguments while you are typing them
