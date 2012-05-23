@@ -10,10 +10,11 @@
 (setq-default show-trailing-whitespace t)
 
 ;;; auto completion
-; load
-(require 'auto-complete)
-(global-auto-complete-mode nil)
-; auto-complete mode customizations
+(add-to-list 'load-path "~/emacs-libs/popup")
+(add-to-list 'load-path "~/emacs-libs/auto-complete")
+(require 'auto-complete-config)
+(ac-config-default)
+(global-auto-complete-mode t)
 (setq
       ac-auto-show-menu t
       ac-candidate-limit nil
@@ -24,6 +25,10 @@
       ac-quick-help-delay 1.5
       ac-quick-help-prefer-pos-tip t
       ac-use-quick-help nil
+      ; Start auto-completion after 2 characters of a word
+      ac-auto-start 2
+      ; case sensitivity is important when finding matches
+      ac-ignore-case nil
 )
 
 (add-hook 'c-mode-common-hook '(lambda ()
