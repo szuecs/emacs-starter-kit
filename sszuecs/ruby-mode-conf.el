@@ -132,7 +132,8 @@ buffer."
           ("\\.rhtml$" . eruby-nxhtml-mumamo-mode)
           ("\\.erb$" . eruby-nxhtml-mumamo-mode)
           ("\\.rake$" . ruby-mode)
-          ("Gemfile$" . ruby-mode)
+          ("Gemfile" . ruby-mode)
+          ("Rakefile" . ruby-mode)
           ("\\.builder" . ruby-mode)
           ("\\.rjs" . ruby-mode)))
 
