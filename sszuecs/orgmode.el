@@ -456,6 +456,7 @@ Skips capture tasks and tasks with subtasks"
 ;(setq org-mobile-use-encryption t)
 ;(setq org-mobile-encryption-password "a_password")
 
+;; org-man provides links to manpages, example: man:ls
 (add-to-list 'load-path "~/emacs-libs/org-man")
 (require 'org-man)
 

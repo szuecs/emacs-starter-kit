@@ -14,7 +14,7 @@
 (add-to-list 'load-path "~/emacs-libs/auto-complete")
 (require 'auto-complete-config)
 (ac-config-default)
-(global-auto-complete-mode t)
+(global-auto-complete-mode nil)
 (setq
       ac-auto-show-menu t
       ac-candidate-limit nil
