@@ -1,6 +1,0 @@
-#name : sub ... { ...shift; }
-# --
-sub ${1:function_name} {
-  my \$${2:arg} = shift;
-  $0
-}

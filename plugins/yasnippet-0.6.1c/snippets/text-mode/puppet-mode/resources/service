@@ -1,8 +1,0 @@
-#name : service {..}
-#key: service
-# --
-service { "${1:name}":
-  ensure => 'running',
-  subscribe => File["${2:config}"],
-}
-$0

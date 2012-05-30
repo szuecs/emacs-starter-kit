@@ -1,9 +1,0 @@
-#name : file {..directory }
-#key: file
-# --
-file { "${1:name}":
-  owner => "${2:root}", group => "$2", mode  => ${3:755},
-  ensure => directory,
-  recurse => true,
-}
-$0
