@@ -1,0 +1,7 @@
+# name : <html>...</html>
+# group: doctype
+# --
+<!DOCTYPE html>
+<html>
+  $0
+</html>
