@@ -1,9 +1,10 @@
 ;;;; ESS / R
 ; load
-(add-to-list 'load-path "~/emacs-libs/ess/lisp")
-(autoload 'ess-site "ess-site" "Emacs speaks statistics" t)
-(add-to-list 'auto-mode-alist '("\\.r$" . r-mode))
-(add-to-list 'auto-mode-alist '("\\.rd\\'" . Rd-mode))
+(load "~/emacs-libs/ess/lisp/ess-site.el")
+;(add-to-list 'load-path "~/emacs-libs/ess/lisp")
+;(autoload 'ess-site "ess-site" "Emacs speaks statistics" t)
+;(add-to-list 'auto-mode-alist '("\\.r$" . r-mode))
+;(add-to-list 'auto-mode-alist '("\\.rd\\'" . Rd-mode))
 ; config
 (setq inferior-R-program-name "/usr/bin/R")
 (setq inferior-R-args "-q")
@@ -29,8 +30,7 @@
 (define-key compilation-minor-mode-map [(?n)] 'next-error-no-select)
 (define-key compilation-minor-mode-map [(?p)] 'previous-error-no-select)
 
-                                        ;
-data inspection by tooltip within ess-buffer
+;data inspection by tooltip within ess-buffer
 (add-to-list 'load-path "~/emacs-libs/ess-R-object-tooltip")
 ;(autoload 'ess-R-object-tooltip "ess-R-object-tooltip" "ess R tooltips" t)
 (require 'ess-R-object-tooltip)
