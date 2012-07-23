@@ -1,4 +1,4 @@
-#name : <label>..</form>
+#name : <label>..</label>
 #key:label
 # --
-<label>$0</label>
+<label>$1</label>

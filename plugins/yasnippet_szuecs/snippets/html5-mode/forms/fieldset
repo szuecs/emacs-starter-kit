@@ -1,6 +1,7 @@
-#name : <fieldset>..</form>
-#key:fieldset
+#name : <fieldset>..</fieldset>
+#key: fieldset
 # --
 <fieldset>
-  $0
+  <legend>$1</legend>
+  $2
 </fieldset>
