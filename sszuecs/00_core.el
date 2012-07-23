@@ -13,6 +13,9 @@
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+; PATH
+(push "/usr/local/bin" exec-path)
+
 ; fuzzy matching within minibuffer
 (require 'ido)
 (setq ido-enable-flex-matching t)
