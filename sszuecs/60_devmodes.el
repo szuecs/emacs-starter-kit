@@ -56,3 +56,9 @@
 
           (setq ac-sources '(ac-source-semantic ac-source-yasnippet))
   ))
+
+; less-css
+(add-to-list 'load-path (concat my-libs-dir "less-css-mode"))
+(require 'less-css-mode)
+
+
