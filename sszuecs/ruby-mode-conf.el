@@ -135,6 +135,7 @@ buffer."
           ("Gemfile" . ruby-mode)
           ("Rakefile" . ruby-mode)
           ("\\.builder" . ruby-mode)
+          ("\\.gemspec" . ruby-mode)
           ("\\.rjs" . ruby-mode)))
 
 ;; compile/run/kill-run hooks
