@@ -1,0 +1,10 @@
+#name : <frameset width="20%,*">...</frameset>
+#key  : frameset
+# --
+<html>
+<frameset ${1:width/cols}="${2:20%,*}">
+  <frame src="${3:url}" />
+  <frame src="${4:url}" />
+</frameset>
+</html>
+$0
