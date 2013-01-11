@@ -1,6 +1,6 @@
 ;; spellchecker
 (require 'auto-dictionary)
-(add-hook 'flyspell-mode-hook '(lambda () (auto-dictionary-mode 1)))
+;(add-hook 'flyspell-mode-hook '(lambda () (auto-dictionary-mode 1)))
 (setq flyspell-issue-message-flag nil)
 
 ; cycle languages on <f8>
@@ -13,3 +13,4 @@
     (ring-insert lang-ring lang)
     (ispell-change-dictionary lang)))
 (global-set-key [f8] 'cycle-ispell-languages)
+(setq flyspell-mode nil)
