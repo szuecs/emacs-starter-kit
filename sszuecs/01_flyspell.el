@@ -13,3 +13,6 @@
     (ring-insert lang-ring lang)
     (ispell-change-dictionary lang)))
 (global-set-key [f8] 'cycle-ispell-languages)
+
+; disable flyspell-mode
+(setq flyspell-mode nil)
