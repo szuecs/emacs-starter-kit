@@ -1,3 +1,5 @@
 (find-file "~/org/tools.org")
 (find-file "~/org/todo.org")
+(find-file "~/org/emacs.org")
+(find-file "~/org/os.org")
 (find-file "~/org/languages.org")
