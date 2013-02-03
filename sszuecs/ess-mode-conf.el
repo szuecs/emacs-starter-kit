@@ -15,9 +15,16 @@
 (setq ess-history-directory "~/.R/")
 (setq ess-use-auto-complete t)
 
-(add-hook 'ess-mode-hook
-          (lambda ()
-            (R))) ;start R in its own buffer
+;; TODO: should look if we have a child process or buffer R
+(defvar *is-running-r* nil)
+(defun run-r-if-not-running ()
+   (if *is-running-r*
+          (message "R console is running already - nothing todo")
+       (setf *is-running-r* t)
+       (R)
+       ))
+
+(add-hook 'ess-mode-hook 'run-r-if-not-running)
 
 ;;; load ess additional functions
 ; r debugger
