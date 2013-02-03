@@ -1,5 +1,6 @@
-#name: #+begin_src ..
-#key: src
+# -*- mode: snippet -*-
+# name: #+begin_src ..
+# key: src
 # --
 #+begin_src ${1:ruby}
 $0
