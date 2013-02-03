@@ -427,17 +427,19 @@ Skips capture tasks and tasks with subtasks"
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((emacs-lisp . t)
+         (calc . t)
          (clojure . t)
+         (css . t)
          (dot . t)
          (ditaa . t)
          (gnuplot . t)
+         (latex . t)
+         (js . t)
          (plantuml . t)
          (python . t)
-         (R . t)
          (ruby . t)
          (sh . t)
-         (sql . nil)
-         (sqlite . t)))
+         (sql . t)))
 
 ;; code block fontification
 (setq org-src-fontify-natively t)
@@ -450,11 +452,13 @@ Skips capture tasks and tasks with subtasks"
 
 ;;;; org-mobile - I use a symlink to export my org folder with WebDAV
 ;; org-mobile-push / org-mobile-pull
-;(setq org-directory "~/org")
-;(setq org-mobile-directory "/Library/WebServer/WebDAV/org")
+(setq org-directory "~/org")
+(setq org-mobile-directory "/Library/WebServer/WebDAV/org")
+;; set files that should be synced
 ;; mobile org encryption (transparent encryption/decryption using sharedkey)
 ;(setq org-mobile-use-encryption t)
 ;(setq org-mobile-encryption-password "a_password")
+
 
 ;; org-man provides links to manpages, example: man:ls
 (add-to-list 'load-path "~/emacs-libs/org-man")
