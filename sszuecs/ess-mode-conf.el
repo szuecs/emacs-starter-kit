@@ -15,14 +15,11 @@
 (setq ess-history-directory "~/.R/")
 (setq ess-use-auto-complete t)
 
-;; TODO: should look if we have a child process or buffer R
-(defvar *is-running-r* nil)
+;; start R console if not running already
 (defun run-r-if-not-running ()
-   (if *is-running-r*
-          (message "R console is running already - nothing todo")
-       (setf *is-running-r* t)
-       (R)
-       ))
+  (if (get-buffer "*R*")
+      (message "running already")
+    (R)))
 
 (add-hook 'ess-mode-hook 'run-r-if-not-running)
 
@@ -53,4 +50,3 @@
 ; r auto yasnippet
 (add-to-list 'load-path "~/emacs-libs/r-autoyas")
 (require 'r-autoyas)
-
