@@ -11,4 +11,5 @@
 ;; 'silent to use symmetric encryption
 ;; nil to ask for users unless specified
 ;; t to always ask for a public-key before encryption
-(setq epa-file-select-keys t)
+(setq epa-file-select-keys nil)
+;(setq epa-file-select-keys t)
