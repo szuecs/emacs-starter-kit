@@ -38,6 +38,7 @@
 (add-hook 'python-mode-hook
           (lambda ()
                   (require 'pymacs)
+                  (setq flyspell-mode nil)
                   (pymacs-load "ropemacs" "rope-")))
 
 (provide 'python-programming)
