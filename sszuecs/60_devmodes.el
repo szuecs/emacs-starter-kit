@@ -26,3 +26,11 @@
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
+;; automatically fille comments but no code
+(add-hook 'c-mode-common-hook
+              (lambda ()
+                (auto-fill-mode 1)
+                (set (make-local-variable 'fill-nobreak-predicate)
+                     (lambda ()
+                       (not (eq (get-text-property (point) 'face)
+                                'font-lock-comment-face))))))
