@@ -27,7 +27,9 @@
 (setq nrepl-tab-command 'nrepl-indent-and-complete-symbol)
 
 (setq nrepl-popup-stacktraces nil)
-(setq nrepl-popup-stacktraces-in-repl t)
+(setq nrepl-popup-stacktraces-in-repl nil)
+
+(setq nrepl-toggle-pretty-printing t)
 
 ;; C-c C-z switch to nrepl buffer
 (add-to-list 'same-window-buffer-names "*nrepl*")
