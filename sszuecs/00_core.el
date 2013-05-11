@@ -22,3 +22,6 @@
 
 ; tramp
 (setq tramp-default-method "ssh")
+
+; compile mode
+(require 'compile)
