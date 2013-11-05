@@ -150,8 +150,9 @@ Skips capture tasks and tasks with subtasks"
 
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
-; Resume clocking tasks when emacs is restarted
-(org-clock-persistence-insinuate)
+;; Resume clocking tasks when emacs is restarted
+;; the following option breaks with emacs 24.3 (osx)
+;(org-clock-persistence-insinuate)
 
 ;; Yes it's long... but more is better ;)
 (setq org-clock-history-length 28)
