@@ -1,4 +1,5 @@
 ;; auctex
+(setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
 ;; http://emacswiki.org/emacs/AUCTeX
 (setq TeX-auto-save t)
 (setq TeX-save-query nil)
@@ -6,7 +7,7 @@
 (setq TeX-PDF-mode t) ; use pdflatex
 
 ;(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+;(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'auto-complete-mode)
 
@@ -15,8 +16,8 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
 (setq-default TeX-master nil)
-;; auto-complete
 
+;; auto-complete
 ; ac-math
 (add-to-list 'load-path (concat my-libs-dir "ac-math"))
 (require 'ac-math)
