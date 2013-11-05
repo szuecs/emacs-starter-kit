@@ -55,6 +55,17 @@
           ;; will appear before semantic tag completions).
 
           (setq ac-sources '(ac-source-semantic ac-source-yasnippet))
+
+          (autopair-mode nil)
+          (subword-mode 1)
+          (c-toggle-electric-state)
+          (c-toggle-auto-newline)
+          (c-toggle-hungry-state)
+          (setq c-syntactic-indentation 1)
+          (setq c-default-style '((java-mode . "java")
+                                  (awk-mode . "awk")
+                                  (other . "gnu")))
+          (setq c-basic-offset 4)
   ))
 
 ; less-css
