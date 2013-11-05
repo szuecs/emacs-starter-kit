@@ -13,7 +13,6 @@
                     "~/emacs-libs/Pymacs/"
                     "~/emacs-libs/ipython/"
                     "~/emacs-libs/anything/"
-                    ;"~/emacs-libs/python-mode-1.0/"
                     )
               load-path))
 
@@ -22,7 +21,7 @@
 ;(setq python-check-command "pyflakes") ;; % pip install pyflakes
 ;}}}
 ;; {{{ ipython
-(require 'ipython)
+;(require 'ipython)
 ; (add-hook 'python-mode-hook #'(lambda ()
 ;                                 (define-key py-mode-map (kbd "M-<tab>") 'anything-ipython-complete)))
 ; (add-hook 'ipython-shell-hook #'(lambda ()
@@ -35,16 +34,16 @@
 ; }}}
 ;; {{{ anything completion
 (require 'anything)
-(require 'anything-ipython)
+;(require 'anything-ipython)
 (require 'anything-match-plugin)
 (require 'anything-config)
  (when (require 'anything-show-completion nil t)
     (use-anything-show-completion 'anything-ipython-complete
                                   '(length initial-pattern)))
 ; }}}
-;; {{{ better code
+;; {{{ better code pylint
 (require 'python-pylint)
-(require 'python-pep8)
+;(require 'python-pep8)
 ; }}}
 ;; {{{ autopair  - deactivate on lisp-modes
 (autoload 'autopair-global-mode "autopair" nil t)
@@ -97,6 +96,7 @@
 ;; {{{ python-mode
 (add-hook 'python-mode-hook
           (lambda ()
+                  (subword-mode 1)
                   (require 'pymacs)
                   (setq flyspell-mode nil)
                   (pymacs-load "ropemacs" "rope-")
