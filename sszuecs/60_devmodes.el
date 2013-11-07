@@ -31,6 +31,12 @@
       ac-ignore-case nil
 )
 
+; less-css
+(add-to-list 'load-path (concat my-libs-dir "less-css-mode"))
+(require 'less-css-mode)
+
+; cc-mode
+(add-to-list 'auto-mode-alist '("\\.ext\\'" . c-mode))
 (add-hook 'c-mode-common-hook '(lambda ()
           ;; ac-omni-completion-sources is made buffer local so
           ;; you need to add it to a mode hook to activate on
@@ -67,12 +73,6 @@
                                   (other . "gnu")))
           (setq c-basic-offset 4)
   ))
-
-; less-css
-(add-to-list 'load-path (concat my-libs-dir "less-css-mode"))
-(require 'less-css-mode)
-
-
 ;; automatically fille comments but no code
 (add-hook 'c-mode-common-hook
               (lambda ()
