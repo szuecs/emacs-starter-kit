@@ -1,6 +1,12 @@
 ;;; global dev mode settings
 ;;; useful for each language
 
+;; chmod 711 if there is a shebang line
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
+;; disable flyspell
+(setq flyspell-mode nil)
+
 (add-to-list 'load-path "~/emacs-libs/expand-region")
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
