@@ -19,6 +19,10 @@
 
 ;; Load path etc.
 
+
+(add-to-list 'load-path "~/emacs-libs/idle-highlight-mode")
+(require 'idle-highlight-mode)
+
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 
