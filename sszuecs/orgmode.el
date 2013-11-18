@@ -441,7 +441,7 @@ Skips capture tasks and tasks with subtasks"
          (R . t)
          (ruby . t)
          (sh . t)
-         (sql . t))))
+         (sql . t)))
 
 ;; code block fontification
 (setq org-src-fontify-natively t)
