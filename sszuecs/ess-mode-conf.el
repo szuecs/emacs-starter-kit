@@ -1,7 +1,8 @@
 ;;;; ESS / R
 ; load
-(load "~/emacs-libs/ess/lisp/ess-site.el")
-;(add-to-list 'load-path "~/emacs-libs/ess/lisp")
+;(load "~/emacs-libs/ess/lisp/ess-site.el")
+(add-to-list 'load-path "~/emacs-libs/ess/lisp")
+(require 'ess-site)
 ;(autoload 'ess-site "ess-site" "Emacs speaks statistics" t)
 ;(add-to-list 'auto-mode-alist '("\\.r$" . r-mode))
 ;(add-to-list 'auto-mode-alist '("\\.rd\\'" . Rd-mode))
