@@ -93,6 +93,10 @@
                        "Wrote and made executable "
                        (buffer-file-name))))))
 ; }}}
+;; {{{ rainbow-delimiter
+(add-to-list 'load-path "~/emacs-libs/rainbow-delimiters/")
+(require 'rainbow-delimiters)
+;; }}}
 ;; {{{ python-mode
 (add-hook 'python-mode-hook
           (lambda ()
@@ -102,6 +106,7 @@
                   (pymacs-load "ropemacs" "rope-")
                   (add-hook 'before-save-hook 'run-codevalidator-py)
                   (setq ropemacs-mode 1)
+                  (rainbow-delimiters-mode 1)
                   ))
 
 (defadvice py-execute-buffer (around python-keep-focus activate)
