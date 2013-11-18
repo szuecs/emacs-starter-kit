@@ -101,6 +101,7 @@
                   (setq flyspell-mode nil)
                   (pymacs-load "ropemacs" "rope-")
                   (add-hook 'before-save-hook 'run-codevalidator-py)
+                  (setq ropemacs-mode 1)
                   ))
 
 (defadvice py-execute-buffer (around python-keep-focus activate)
