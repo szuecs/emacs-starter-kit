@@ -2,7 +2,6 @@
 (add-to-list 'load-path "~/emacs-libs/org-mode/lisp")
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-;(add-to-list 'auto-mode-alist '("\\.org\\'" . org))
 
 ; disable spell checker for this mode, because colors get messy.
 (add-hook 'org-mode-hook
@@ -65,7 +64,7 @@
 (setq org-enforce-todo-checkbox-dependencies t)
 
 ; warn 7 day before deadline ends, p.e. within Agenda
-'(org-deadline-warning-days 7)
+(setq org-deadline-warning-days 7)
 
 ;;;; use org-capture to add fast todo-items to remember them later
 (require 'org-capture)
@@ -423,6 +422,7 @@ Skips capture tasks and tasks with subtasks"
 
 (require 'ob-R)
 (require 'ob-ditaa)
+;org-ditaa-jar-option
 (setq org-plantuml-jar-path
       (expand-file-name "~/src/plantuml/plantuml.jar"))
 (org-babel-do-load-languages
@@ -434,13 +434,14 @@ Skips capture tasks and tasks with subtasks"
          (dot . t)
          (ditaa . t)
          (gnuplot . t)
-         (latex . t)
          (js . t)
+         (latex . t)
          (plantuml . t)
          (python . t)
+         (R . t)
          (ruby . t)
          (sh . t)
-         (sql . t)))
+         (sql . t))))
 
 ;; code block fontification
 (setq org-src-fontify-natively t)
@@ -451,15 +452,13 @@ Skips capture tasks and tasks with subtasks"
 ;; of setting this -- see the docstring for details.
 (setq org-confirm-babel-evaluate nil)
 
-;;;; org-mobile - I use a symlink to export my org folder with WebDAV
-;; org-mobile-push / org-mobile-pull
+;;; org-mobile - I use a symlink to export my org folder with WebDAV
+; org-mobile-push / org-mobile-pull
 (setq org-directory "~/org")
-(setq org-mobile-directory "/Library/WebServer/WebDAV/org")
-;; set files that should be synced
-;; mobile org encryption (transparent encryption/decryption using sharedkey)
-;(setq org-mobile-use-encryption t)
-;(setq org-mobile-encryption-password "a_password")
-
+;(setq org-mobile-directory "/Library/WebServer/WebDAV/org")
+; mobile org encryption (transparent encryption/decryption using sharedkey)
+(setq org-mobile-use-encryption t)
+(setq org-mobile-encryption-password "a_password")
 
 ;; org-man provides links to manpages, example: man:ls
 (add-to-list 'load-path "~/emacs-libs/org-man")
