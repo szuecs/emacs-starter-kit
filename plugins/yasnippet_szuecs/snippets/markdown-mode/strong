@@ -1,0 +1,4 @@
+#name : Strong
+#key: strong
+# --
+**${1:Text}** $0

@@ -1,0 +1,4 @@
+#name : Emphasis
+#key: em
+# --
+_${1:Text}_ $0
