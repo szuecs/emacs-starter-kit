@@ -1,5 +1,5 @@
 ;; spellchecker
-(require 'auto-dictionary)
+;(require 'auto-dictionary)
 ;(add-hook 'flyspell-mode-hook '(lambda () (auto-dictionary-mode 1)))
 (setq flyspell-issue-message-flag nil)
 
