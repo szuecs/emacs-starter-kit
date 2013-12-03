@@ -1,5 +1,5 @@
 ; use git repo: git clone git://repo.or.cz/org-mode.git
-(add-to-list 'load-path "~/emacs-libs/org-mode/lisp")
+;(add-to-list 'load-path "~/emacs-libs/org-mode/lisp")
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
@@ -422,7 +422,8 @@ Skips capture tasks and tasks with subtasks"
 
 (require 'ob-R)
 (require 'ob-ditaa)
-;org-ditaa-jar-option
+(unless (not is-darwin)
+    (setq org-ditaa-jar-path "/usr/local/Cellar/ditaa/0.9/libexec/ditaa0_9.jar"))
 (setq org-plantuml-jar-path
       (expand-file-name "~/src/plantuml/plantuml.jar"))
 (org-babel-do-load-languages
@@ -466,4 +467,3 @@ Skips capture tasks and tasks with subtasks"
 
 ; last stmt
 (setq org-log-done t)
-
