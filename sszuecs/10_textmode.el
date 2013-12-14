@@ -5,5 +5,3 @@
 ;(require 'textmate)
 ;(textmate-mode)
 
-(local-set-key (kbd "C-/") 'uncomment-region)
-(local-set-key (kbd "C-7") 'comment-region)

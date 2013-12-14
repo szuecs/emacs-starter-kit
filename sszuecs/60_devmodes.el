@@ -1,5 +1,6 @@
 ;;; global dev mode settings
 ;;; useful for each language
+(global-set-key (kbd "C-/") 'comment-or-uncomment-region)
 
 ;; chmod 711 if there is a shebang line
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
