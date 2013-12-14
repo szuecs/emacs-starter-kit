@@ -1,5 +1,6 @@
 # name : <html>...</html>
 # group: doctype
+# key: html
 # --
 <!DOCTYPE html>
 <html>
