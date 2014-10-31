@@ -12,7 +12,7 @@
       (append (list nil
                     "~/emacs-libs/Pymacs/"
                     "~/emacs-libs/ipython/"
-                    "~/emacs-libs/anything/"
+;                    "~/emacs-libs/anything/"
                     )
               load-path))
 
@@ -27,6 +27,13 @@
 ; (add-hook 'ipython-shell-hook #'(lambda ()
 ;                                   (define-key py-mode-map (kbd "M-<tab>") 'anything-ipython-complete)))
 ;}}}
+;; {{{ jedi mode - smart autocomplete
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+;; Type:
+;;     M-x package-install RET jedi RET
+;;     M-x jedi:install-server RET
+; }}}
 ;; {{{ lambda mode
 (require 'lambda-mode)
 (add-hook 'python-mode-hook #'lambda-mode 1)
@@ -43,7 +50,7 @@
 ; }}}
 ;; {{{ better code pylint
 (require 'python-pylint)
-;(require 'python-pep8)
+(require 'python-pep8)
 ; }}}
 ;; {{{ autopair  - deactivate on lisp-modes
 (autoload 'autopair-global-mode "autopair" nil t)
@@ -82,22 +89,33 @@
 
 ;; }}}
 ;; {{{ codevalidator
-(defvar codevalidator-py "~/bin/codevalidator.py -f")
+(defvar codevalidator-py "~/bin/codevalidator.py -f ")
 
 (defun run-codevalidator-py ()
-  (if (and (buffer-file-name) (buffer-modified-p) (file-executable-p codevalidator-py))
+  (interactive)
+
+  (cond ((string-equal (file-name-extension buffer-file-name) "py")
       (if (= (shell-command
-               (concat run-codevalidator-py (buffer-file-name)))
-             0)
-             (message (concat
-                       "Wrote and made executable "
-                       (buffer-file-name))))))
+           (concat codevalidator-py (buffer-file-name)))
+         0)
+         (message (concat
+                   "Ran "
+                   codevalidator-py
+                   " on "
+                   (buffer-file-name)))))))
 ; }}}
 ;; {{{ rainbow-delimiter
 (add-to-list 'load-path "~/emacs-libs/rainbow-delimiters/")
 (require 'rainbow-delimiters)
 ;; }}}
 ;; {{{ python-mode
+(defun run-python-pylint ()
+  (interactive)
+  (cond ((string-equal (file-name-extension buffer-file-name) "py")
+      (python-pylint))
+      )
+  )
+
 (add-hook 'python-mode-hook
           (lambda ()
                   (subword-mode 1)
@@ -105,6 +123,7 @@
                   (setq flyspell-mode nil)
                   (pymacs-load "ropemacs" "rope-")
                   (add-hook 'before-save-hook 'run-codevalidator-py)
+                  (add-hook 'after-save-hook 'run-python-pylint)
                   (setq ropemacs-mode 1)
                   (rainbow-delimiters-mode 1)
                   ))
