@@ -87,8 +87,6 @@
 
 ;;;; use org-remember to add fast short memos
 (require 'remember)
-(org-remember-insinuate)
-;(define-key global-map "\C-cr" 'org-remember)
 (setq org-remember-store-without-prompt t)
 (setq org-remember-templates
       (quote
