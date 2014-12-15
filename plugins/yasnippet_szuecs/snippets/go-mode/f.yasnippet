@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# key: f
+# name: Function
+# --
+func${3/(.+)/ /}${3:name}(${4:params})${5/(.+)/ /}${5:type} {
+    ${0:// body}
+}
