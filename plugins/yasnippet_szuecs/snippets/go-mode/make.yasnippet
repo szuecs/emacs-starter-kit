@@ -2,4 +2,4 @@
 # key: mk
 # name: Make
 # --
-${1:name}${1/(.+)/ := /}make(${0:reftype})
+${1:slice} := make(${2:reftype}, ${3:len}, ${4:capacity})

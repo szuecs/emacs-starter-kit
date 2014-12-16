@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # key: f
-# name: Function
+# name: Function with one result
 # --
-func${3/(.+)/ /}${3:name}(${4:params})${5/(.+)/ /}${5:type} {
-    ${0:// body}
+func ${1:name}(${2:params}) ${3:returnType} {
+    ${4:// body}
 }
