@@ -11,34 +11,46 @@
 ;; use godoc - should be in $PATH
 ; M-x godoc
 
-;; godef
-; evtl muss man das installieren, aber unklar, da /usr/lib/go/bin zu $PATH hinzugefügt werden mußte
-; % go get code.google.com/p/rog-go/exp/cmd/godef
+;; godef is part of go
 
 ;; go eldoc
 (add-to-list 'load-path (concat my-libs-dir "go-eldoc"))
 (require 'go-eldoc)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(set-face-attribute 'eldoc-highlight-function-argument nil
+                    :underline t :foreground "forestgreen"
+                    :weight 'bold)
 
 ;; autocomplete
 ;; FIXME: works not correctly
 ; export GOROOT=/usr/lib/go
 ; export GOPATH=$HOME/go
+; export GOBIN=$GOPATH/bin
 ; PATH=${PATH}:${GOROOT}/bin:${GOPATH}/bin
 ; % go get -u -v github.com/nsf/gocode
 ; % cd ~/go/src/github.com/nsf/gocode
 ; % git checkout -f c6fa1a4f10162678ede2596465159f87c7369922
 ; % go build
 ; % mv gocode ~/go/bin/
-;(add-to-list 'load-path (concat my-libs-dir "gocode"))
-;(require 'go-autocomplete)
-;(require 'auto-complete-config)
+(add-to-list 'load-path (concat my-libs-dir "gocode"))
+(require 'go-autocomplete)
+(require 'auto-complete-config)
 
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-(set-face-attribute 'eldoc-highlight-function-argument nil
-                    :underline t :foreground "green"
-                    :weight 'bold)
+;; syntax check
+(add-to-list 'load-path "~/go/src/github.com/dougm/goflymake")
+(require 'go-flymake)
+
+;; go-errcheck
+;(add-to-list 'load-path (concat my-libs-dir "go-errcheck"))
+;(require 'go-errcheck)
+
+;; oracle
+(load-file (concat (getenv "HOME") "/go/src/code.google.com/p/go.tools/cmd/oracle/oracle.el"))
 
 (defun my-go-mode-hook ()
+  ; Use goimports instead of gofmt
+  (setq gofmt-command "goimports")
+
   ;; use gofmt - should be in $PATH
   ; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
@@ -54,5 +66,8 @@
   ;; use godef - should be in $PATH
   ; M-. jump to declaration
   ; M-* jump back
-  (local-set-key (kbd "M-.") 'godef-jump))
+  (local-set-key (kbd "M-.") 'godef-jump)
+  ; go-oracle
+  (go-oracle-mode)
+  )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
