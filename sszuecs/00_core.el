@@ -14,6 +14,7 @@
 (prefer-coding-system 'utf-8)
 
 ; PATH
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (push "/usr/local/bin" exec-path)
 
 ; do not block input events
@@ -32,6 +33,9 @@
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions))
 
+;; ibuffer
+(setq ibuffer-set-filter-groups-by-mode t)
+
 ;; ido
 ; fuzzy matching within minibuffer
 (require 'ido)
@@ -41,7 +45,7 @@
 ; magic guess
 (setq ido-use-filename-at-point 'guess)
 ; sort buffer
-(setq ido-file-extensions-order '(".org" ".txt" ".pp" ".rb" ".py" ".emacs" ".xml" ".el" ".ini" ".cfg" ".cnf" ".r" ".c" ".h" ".cpp" ".clj" ".java"))
+(setq ido-file-extensions-order '(".el" ".org" ".go" ".pp" ".rb" ".py" ".r" ".c" ".h" ".js" ".xml" ".html" ".txt" ".ini" ".cfg" ".cnf" ".cpp" ".clj" ".java" ".pl"))
 ; get rid of confirmations
 (setq ido-create-new-buffer 'always)
 
