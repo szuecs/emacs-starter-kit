@@ -17,146 +17,80 @@
 (setq org-return-follows-link t)
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 (setq org-default-notes-file (expand-file-name (concat my-orgfile-dir "notes.org")))
+; global Effort estimate values
+(setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
+; do not archive done tasks
+(setq org-archive-mark-done nil)
 
-;;;; todo-lists
+;;;
+;;; TODO shortcuts
+;;;
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "FIXME(f@)" "NEXT(n)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
+      '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d!/!)" "DELEGATED(g@/!)")
         (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
-        (sequence "FEEDBACK(F)" "EXPIRED(E@)" "REJECTED(R@)")
-        (sequence "OPEN(O)" "|" "CLOSED(C!)")))
-
+        (sequence "OPEN(O)" "FIXME(f)" "|" "CLOSED(C!)")))
 (setq org-todo-keyword-faces
-      (quote (("TODO"      :foreground "red"          :weight bold)
-              ("NEXT"      :foreground "blue"         :weight bold)
-              ("DONE"      :foreground "forest green" :weight bold)
-              ("DELEGATED" :foreground "forest green" :weight bold)
-              ("WAITING"   :foreground "yellow"       :weight bold)
-              ("SOMEDAY"   :foreground "goldenrod"    :weight bold)
-              ("CANCELLED" :foreground "orangered"    :weight bold)
-              ("OPEN"      :foreground "magenta"      :weight bold)
-              ("CLOSED"    :foreground "forest green" :weight bold)
-              ("FEEDBACK"  :foreground "magenta"      :weight bold)
-              ("EXPIRED"   :foreground "olivedrab1"   :weight bold)
-              ("REJECTED"  :foreground "olivedrab"    :weight bold))))
-
+      (quote (("TODO"       :foreground "red"          :weight bold)
+              ("INPROGRESS" :foreground "orangered"    :weight bold)
+              ("DONE"       :foreground "forest green" :weight bold)
+              ("DELEGATED"  :foreground "forest green" :weight bold)
+              ("WAITING"    :foreground "magenta"      :weight bold)
+              ("SOMEDAY"    :foreground "goldenrod"    :weight bold)
+              ("CANCELLED"  :foreground "olivedrab"    :weight bold)
+              ("OPEN"       :foreground "red"          :weight bold)
+              ("CLOSED"     :foreground "forest green" :weight bold)
+              ;("FEEDBACK"   :foreground "magenta"      :weight bold)
+              ;("EXPIRED"    :foreground "olivedrab1"   :weight bold)
+              ;("REJECTED"   :foreground "olivedrab"    :weight bold)
+              )))
 ;; auto-tag by state, makes for easy filtering, YAY!
 (setq org-todo-state-tags-triggers
-      (quote (("CANCELLED" ("CANCELLED" . t))
-              ("WAITING" ("WAITING" . t))
-              ("SOMEDAY" ("WAITING" . t))
-              (done      ("WAITING"))
-              ("TODO"    ("WAITING") ("CANCELLED"))
-              ("NEXT"    ("WAITING"))
-              ("DONE"    ("WAITING") ("CANCELLED")))))
+      (quote (("CANCELLED"  ("CANCELLED" . t))
+              ("WAITING"    ("WAITING" . t))
+              ("SOMEDAY"    ("WAITING" . t))
+              ("TODO"       ("WAITING") ("CANCELLED"))
+              ("INPROGRESS" ("WAITING"))
+              ("DONE"       ("WAITING") ("CANCELLED")))))
 
+;;; task change configurations
 ; keyboard shortcuts for state selection
 (setq org-use-fast-todo-selection t)
-
 ; make org note the time for everytime I completed recurring tasks
 (setq org-log-repeat "time")
 ; make org note the time for completed tasks
 (setq org-log-done 'time)
 ; S-cursor state changes (fixing states) must not trigger updates
 (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-
 ; dependencies of nested TODO-items and nested checkboxes
 (setq org-enforce-todo-dependencies t)
 (setq org-enforce-todo-checkbox-dependencies t)
 
-; warn 7 day before deadline ends, p.e. within Agenda
-(setq org-deadline-warning-days 7)
-
-;;;; use org-capture to add fast todo-items to remember them later
-(require 'org-capture)
-(define-key global-map "\C-cc" 'org-capture)
-;; Capture templates for: TODO-tasks, Notes, appointments, phone calls, and org-protocol
-(setq org-capture-templates (quote (("t" "todo" entry (file (concat my-orgfile-dir "refile.org")) "* TODO %?
-%U
-%a" :clock-in t :clock-resume t)
-                                    ("n" "note" entry (file (concat my-orgfile-dir "refile.org")) "* %?                                                                            :NOTE:
-%U
-%a
-:CLOCK:
-:END:" :clock-in t :clock-resume t)
-                                    ("a" "appointment" entry (file+datetree (concat my-orgfile-dir "diary.org")) "* %?
-%U" :clock-in t :clock-resume t)
-                                    ("p" "Phone call" entry (file (concat my-orgfile-dir "refile.org")) "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
-                                    ("w" "org-protocol" entry (file (concat my-orgfile-dir "refile.org")) "* TODO Review %c
-%U" :immediate-finish t :clock-in t :clock-resume t))))
-
-
-;;;; use org-remember to add fast short memos
-(require 'remember)
-(setq org-remember-store-without-prompt t)
-(setq org-remember-templates
-      (quote
-       (("todo" ?t "* TODO %?\n %U\n %a\n :CLOCK:\n :END:" nil "Tasks" nil)
-        ("note" ?n "* %? :NOTE:\n %U\n %a\n :CLOCK:\n :END:" nil "Notes" nil)
-        ("appointment" ?a "* %? :APPOINTMENT:\n %U"
-         "Appointments" nil))))
-
-
-;;;; refile - To refile a task to my norang.org file under System
-;             Maintenance I just put the cursor on the task and hit C-c C-w and
-;             enter nor TAB sys TAB RET and it's done.
-;             List them within Agenda mode C-c a r
+;;;
+;;; Misc
+;;;
 ; Use IDO for target completion
 ;(setq org-completion-use-ido t)
-
 ; src
 (setq org-src-fontify-natively t)
-
-; Targets include this file and any file contributing to the agenda - up to 5 levels deep
-(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil
-  :maxlevel . 5))))
-
-; Targets start with the file name - allows creating level 1 tasks
-(setq org-refile-use-outline-path (quote file))
 
 ; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
 (setq org-outline-path-complete-in-steps t)
 
-; Allow refile to create parent tasks with confirmation
-(setq org-refile-allow-creating-parent-nodes (quote confirm))
 
-
-;;;; Clocking
-(defun bh/clock-in-to-next (kw)
-  "Switch task from TODO to NEXT when clocking in.
-Skips capture tasks and tasks with subtasks"
-  (if (and (string-equal kw "TODO")
-           (not (and (boundp 'org-capture-mode) org-capture-mode)))
-      (let ((subtree-end (save-excursion (org-end-of-subtree t)))
-            (has-subtask nil))
-        (save-excursion
-          (forward-line 1)
-          (while (and (not has-subtask)
-                      (< (point) subtree-end)
-                      (re-search-forward "^\*+ " subtree-end t))
-            (when (member (org-get-todo-state) org-not-done-keywords)
-              (setq has-subtask t))))
-        (when (not has-subtask)
-          "NEXT"))))
-
-;; Remove empty CLOCK drawers on clock out
-(defun bh/remove-empty-drawer-on-clock-out ()
-  (interactive)
-  (save-excursion
-    (beginning-of-line 0)
-    (org-remove-empty-drawer-at "CLOCK" (point))))
-
-(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
-
+;;;
+;;; Clocking
+;;;
+;;; Clocking configuration
+;; ?the following option breaks with emacs 24.3 (osx)?
 ;; Resume clocking tasks when emacs is restarted
-;; the following option breaks with emacs 24.3 (osx)
-;(org-clock-persistence-insinuate)
+(org-clock-persistence-insinuate)
 
 ;; Yes it's long... but more is better ;)
 (setq org-clock-history-length 28)
 ;; Resume clocking task on clock-in if the clock is open
 (setq org-clock-in-resume t)
-;; Change task state to NEXT when clocking in
-(setq org-clock-in-switch-to-state (quote bh/clock-in-to-next))
+;; Change task state to INPROGRESS when clocking in
+(setq org-clock-in-switch-to-state (quote bh/clock-in-to-inprogress))
 ;; Separate drawers for clocking and logs
 (setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK")))
 ;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
@@ -171,22 +105,10 @@ Skips capture tasks and tasks with subtasks"
 (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
 ;; Include current clocking task in clock reports
 (setq org-clock-report-include-clocking-task t)
-
+; clean 0 clock
 (setq org-clock-out-remove-zero-time-clocks t)
 
-; Agenda log mode items to display (clock time only by default)
-(setq org-agenda-log-mode-items (quote (clock)))
-; Agenda clock report parameters (no links, 2 levels deep)
-(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
-; Set default column view headings: Task Effort Clock_Summary
-(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
-; global Effort estimate values
-(setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
-
-
-;;;; auto clocking is a bit messy..
-(setq bh/keep-clock-running nil)
-
+;;; Clocking functons
 (defun bh/clock-in ()
   (interactive)
   (setq bh/keep-clock-running t)
@@ -222,49 +144,96 @@ Skips capture tasks and tasks with subtasks"
     (org-with-point-at clock-in-to-task
       (org-clock-in nil))))
 
+(defun bh/clock-in-to-inprogress (kw)
+  "Switch task from TODO to INPROGRESS when clocking in.
+Skips capture tasks and tasks with subtasks"
+  (if (and (string-equal kw "TODO")
+           (not (and (boundp 'org-capture-mode) org-capture-mode)))
+      (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+            (has-subtask nil))
+        (save-excursion
+          (forward-line 1)
+          (while (and (not has-subtask)
+                      (< (point) subtree-end)
+                      (re-search-forward "^\*+ " subtree-end t))
+            (when (member (org-get-todo-state) org-not-done-keywords)
+              (setq has-subtask t))))
+        (when (not has-subtask)
+          "INPROGRESS"))))
 
-;;;; tagging
-(setq org-tag-alist (quote ((:startgroup)
-                            ("@office" . ?o)
-                            ("@home" . ?h)
-                            ("@elsewhere" . ?e)
-                            (:endgroup)
-                            (:startgroup)
-                            ("ruby" . ?r)
-                            ("coding" . ?c)
-                            ("framework" . ?f)
-                            (:endgroup)
-                            ("PHONE" . ?P)
-                            ("WAITING" . ?w)
-                            ("HOME" . ?H)
-                            ("ORG" . ?O)
-                            ("MARK" . ?M)
-                            ("NOTE" . ?n)
-                            ("CANCELLED" . ?C))))
+;; Remove empty CLOCK drawers on clock out
+(defun bh/remove-empty-drawer-on-clock-out ()
+  (interactive)
+  (save-excursion
+    (beginning-of-line 0)
+    (org-remove-empty-drawer-at "CLOCK" (point))))
+(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
-; Allow setting single tags without the menu
-;(setq org-fast-tag-selection-single-key (quote expert))
 
-;;;; Agenda View
-;; Keep tasks with dates off the global todo-lists
-(setq org-agenda-todo-ignore-with-date nil)
+;;;
+;;; Capture
+;;; use org-capture to add fast todo-items to remember them later
+;;;
+(require 'org-capture)
+(define-key global-map "\C-cc" 'org-capture)
+;; Capture templates for: TODO-tasks, Notes, appointments, phone calls, and org-protocol
+(setq org-capture-templates
+      (quote (
+              ("t" "todo" entry (file (concat my-orgfile-dir "gtd.org")) "* TODO %?
+%U" :clock-in t :clock-resume t)
+;%a" :clock-in t :clock-resume t)
+              ("n" "note" entry (file (concat my-orgfile-dir "refile.org")) "* %?                                                                            :NOTE:
+%U
+%a
+:CLOCK:
+:END:" :clock-in t :clock-resume t)
+              ("a" "appointment" entry (file+datetree (concat my-orgfile-dir "diary.org")) "* %?
+%U" :clock-in t :clock-resume t)
+              ("p" "Phone call" entry (file (concat my-orgfile-dir "refile.org")) "* Phone %? :PHONE:\n%U\n" :clock-in t :clock-resume t)
+              ("w" "org-protocol" entry (file (concat my-orgfile-dir "refile.org")) "* TODO Review %c
+%U" :immediate-finish t :clock-in t :clock-resume t))))
 
-;; Allow deadlines which are due soon to appear on the global-todo
-;; lists
-(setq org-agenda-todo-ignore-deadlines (quote far))
 
-;; Keep tasks scheduled in the future off the global todo-lists
-(setq org-agenda-todo-ignore-scheduled (quote future))
+;;;
+;;;  Remember was replaced with capture
+;;;; use org-remember to add fast short memos
+;;;
+;; (require 'remember)
+;; (setq org-remember-store-without-prompt t)
+;; (setq org-remember-templates
+;;       (quote
+;;        (
+;;         ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?\nAdded: %U"
+;;                   (concat my-orgfile-dir "/gtd.org") "Tasks")
+;;         ("todo" ?y "* TODO %?\n %U\n %a\n :CLOCK:\n :END:" nil "Tasks" nil)
+;;         ("note" ?n "* %? :NOTE:\n %U\n %a\n :CLOCK:\n :END:" nil "Notes" nil)
+;;         ("appointment" ?a "* %? :APPOINTMENT:\n %U"
+;;          "Appointments" nil))))
 
-;; Remove completed deadline tasks from the agenda view
-(setq org-agenda-skip-deadline-if-done t)
 
-;; Remove completed scheduled tasks from the agenda view
-(setq org-agenda-skip-scheduled-if-done t)
+;;;
+;;; refile - To refile a task to my norang.org file under System
+;;;          Maintenance I just put the cursor on the task and hit C-c
+;;;          C-w and enter nor TAB sys TAB RET and it's done.  List
+;;;          them within Agenda mode C-c a r
 
-;; Remove completed items from search results
-(setq org-agenda-skip-timestamp-if-done t)
+; Targets include this file and any file contributing to the agenda - up to 5 levels deep
+(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil
+  :maxlevel . 5))))
 
+; Targets start with the file name - allows creating level 1 tasks
+(setq org-refile-use-outline-path (quote file))
+
+; Allow refile to create parent tasks with confirmation
+(setq org-refile-allow-creating-parent-nodes (quote confirm))
+
+
+;;;
+;;; Agenda
+;;;
+; Agenda functions
+; bh/ functions
+;
 ;; agenda function by http://doc.norang.ca/org-mode.html 12 GTD
 (defun bh/is-project-p ()
   "Any task with a todo keyword subtask"
@@ -285,7 +254,7 @@ Skips capture tasks and tasks with subtasks"
          (has-next (save-excursion
                      (forward-line 1)
                      (and (< (point) subtree-end)
-                          (re-search-forward "^\\*+ NEXT " subtree-end t)))))
+                          (re-search-forward "^\\*+ INPROGRESS " subtree-end t)))))
     (if (and (bh/is-project-p) (not has-next))
         nil ; a stuck project, has subtasks but no next task
       subtree-end)))
@@ -304,7 +273,46 @@ Skips capture tasks and tasks with subtasks"
         subtree-end
       nil)))
 
+; Erase all reminders and rebuilt reminders for today from the agenda
+(defun bh/org-agenda-to-appt ()
+  (interactive)
+  (setq appt-time-msg-list nil)
+  (org-agenda-to-appt))
 
+;;;
+;;; config of Agenda, view with C-c a
+;;;
+; warn 7 day before deadline ends, p.e. within Agenda
+(setq org-deadline-warning-days 7)
+
+; Agenda log mode items to display (clock time only by default)
+(setq org-agenda-log-mode-items (quote (clock)))
+; include diary within agenda views
+(setq org-agenda-include-diary t)
+; Agenda clock report parameters (no links, 2 levels deep)
+;; Agenda clock report parameters
+(setq org-agenda-clockreport-parameter-plist
+      (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
+;(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
+; Set default column view headings: Task Effort Clock_Summary
+(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
+;; Keep tasks with dates off the global todo-lists
+(setq org-agenda-todo-ignore-with-date nil)
+;; Allow deadlines which are due soon to appear on the global-todo
+;; lists
+(setq org-agenda-todo-ignore-deadlines (quote far))
+;; Keep tasks scheduled in the future off the global todo-lists
+(setq org-agenda-todo-ignore-scheduled (quote future))
+;; Remove completed deadline tasks from the agenda view
+(setq org-agenda-skip-deadline-if-done t)
+;; Remove completed scheduled tasks from the agenda view
+(setq org-agenda-skip-scheduled-if-done t)
+;; Remove completed items from search results
+(setq org-agenda-skip-timestamp-if-done t)
+
+;;;
+;;; Agenda views and shortcuts
+;;;
 (setq org-agenda-custom-commands
   '(("O" "Office block agenda"
        ((agenda "" (
@@ -356,10 +364,9 @@ Skips capture tasks and tasks with subtasks"
       (org-agenda-todo-ignore-deadlines nil)
       (org-agenda-todo-ignore-with-date nil)
       (org-agenda-overriding-header "Waiting Tasks")))
-    ("n" "Next" tags-todo "-WAITING-CANCELLED/!NEXT"
-     ((org-agenda-overriding-header "Next Tasks")))
+    ("i" "InProgress" tags-todo "/!INPROGRESS"
+     ((org-agenda-overriding-header "Tasks that are started, but not finished")))
 
-    ; FIXME does not show tagged notes from remember
     ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE"
      ((org-agenda-todo-ignore-with-date nil)
       (org-agenda-todo-ignore-deadlines nil)
@@ -393,37 +400,63 @@ Skips capture tasks and tasks with subtasks"
     )
 )
 
-;;;; archive
-(setq org-archive-mark-done nil)
 
-;;;; reminder with appt
-; Erase all reminders and rebuilt reminders for today from the agenda
-(defun bh/org-agenda-to-appt ()
-  (interactive)
-  (setq appt-time-msg-list nil)
-  (org-agenda-to-appt))
-
+;;; Appt - reminder
+;;; reminder with appt
+;;;
 ; Rebuild the reminders everytime the agenda is displayed
 (add-hook 'org-finalize-agenda-hook 'bh/org-agenda-to-appt)
-
 ; This is at the end of my .emacs - so appointments are set up when Emacs starts
 (bh/org-agenda-to-appt)
-
 ; Activate appointments so we get notifications
 (appt-activate t)
-
 ; If we leave Emacs running overnight - reset the appointments one minute after midnight
 (run-at-time "24:01" nil 'bh/org-agenda-to-appt)
 
-;;;; org-babel for graphics -> use latest org-mode version (no need to import org-babel
-(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+;;;; auto clocking is a bit messy..
+(setq bh/keep-clock-running nil)
 
+
+;;;
+;;; tagging
+;;;
+(setq org-tag-alist
+      (quote ((:startgroup)
+              ("@office" . ?o)
+              ("@home" . ?h)
+              ("@elsewhere" . ?e)
+              (:endgroup)
+              (:startgroup)
+              ("ruby" . ?r)
+              ("coding" . ?c)
+              ("framework" . ?f)
+              (:endgroup)
+              ("PHONE" . ?P)
+              ("WAITING" . ?w)
+              ("HOME" . ?H)
+              ("ORG" . ?O)
+              ("MARK" . ?M)
+              ("NOTE" . ?n)
+              ("CANCELLED" . ?C))))
+
+; Allow setting single tags without the menu
+;(setq org-fast-tag-selection-single-key (quote expert))
+
+
+
+;;;
+;;; org-babel for graphics and computer languages
+;;;
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 (require 'ob-R)
+; ditaa
 (require 'ob-ditaa)
 (unless (not is-darwin)
-    (setq org-ditaa-jar-path "/usr/local/Cellar/ditaa/0.9/libexec/ditaa0_9.jar"))
+  (setq org-ditaa-jar-path "/usr/local/Cellar/ditaa/0.9/libexec/ditaa0_9.jar"))
+; UML with plantuml
 (setq org-plantuml-jar-path
       (expand-file-name "~/src/plantuml/plantuml.jar"))
+; colored code with babel
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((emacs-lisp . t)
@@ -451,7 +484,10 @@ Skips capture tasks and tasks with subtasks"
 ;; of setting this -- see the docstring for details.
 (setq org-confirm-babel-evaluate nil)
 
+
+;;; Mobile-Org
 ;;; org-mobile - I use a symlink to export my org folder with WebDAV
+;;;
 ; org-mobile-push / org-mobile-pull
 (setq org-directory "~/org")
 ;(setq org-mobile-directory "/Library/WebServer/WebDAV/org")
@@ -459,9 +495,13 @@ Skips capture tasks and tasks with subtasks"
 (setq org-mobile-use-encryption t)
 (setq org-mobile-encryption-password "a_password")
 
-;; org-man provides links to manpages, example: man:ls
+;;; Manpage integration
+;;; org-man provides links to manpages, example: man:ls
+;;;
 (add-to-list 'load-path "~/emacs-libs/org-man")
 (require 'org-man)
 
+;
+;
 ; last stmt
 (setq org-log-done t)
