@@ -1,9 +1,12 @@
+; add to $PATH
+(setenv "PATH" (concat (getenv "PATH") ":/usr/lib/go/bin:/usr/local/go/bin:/home/sszuecs/go/bin"))
+(push "/usr/lib/go/bin" exec-path)
+(push "/usr/local/go/bin" exec-path)
+(push "/home/sszuecs/go/bin" exec-path)
+(push "/Users/sszuecs/go/bin" exec-path)
+
 (add-to-list 'load-path (concat my-libs-dir "go-mode"))
 (require 'go-mode)
-
-; add to $PATH
-(push "/usr/lib/go/bin" exec-path)
-(push "/home/sszuecs/go/bin" exec-path)
 
 ;; use godoc - should be in $PATH
 ; M-x godoc
