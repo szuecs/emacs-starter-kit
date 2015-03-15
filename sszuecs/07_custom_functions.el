@@ -40,6 +40,17 @@ Assumes that the frame is only split into two."
       (split-window-vertically)) ; gives us a split with the other window twice
     (switch-to-buffer nil))) ; restore the original window in this part of the frame
 
+(defun show-env()
+  "Show ENV variables known to emacs"
+  (interactive)
+  (print (concat
+          "PATH: " (getenv "PATH") "\n"
+          "GOPATH: " (getenv "GOPATH") "\n"
+          "GOROOT:" (getenv "GOROOT") "\n"
+          "GOBIN:" (getenv "GOBIN") ))
+  (print exec-path)
+  )
+
 
 ;; bidings
 (global-set-key (kbd "C-x 5") 'window-toggle-split-direction)

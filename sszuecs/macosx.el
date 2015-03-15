@@ -11,5 +11,6 @@
       "/usr/local/share/python" ":"
       "/usr/texbin" ":"
       (getenv "PATH")))
+  (setenv "GOROOT" "/usr/local/go")
 )
 
