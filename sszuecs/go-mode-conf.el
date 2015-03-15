@@ -1,7 +1,7 @@
 ; add to $PATH
 ;(setenv "PATH" (concat (getenv "PATH") ":/usr/lib/go/bin:/usr/local/go/bin:/home/sszuecs/go/bin"))
-;(push "/usr/lib/go/bin" exec-path)
-;(push "/usr/local/go/bin" exec-path)
+(push "/usr/lib/go/bin" exec-path)
+(push "/usr/local/go/bin" exec-path)
 
 ;; set ENV
 (setenv "GOPATH" (concat (getenv "HOME") "/go"))
@@ -9,10 +9,11 @@
 (setenv "PATH" (concat (getenv "PATH")
     ":" (getenv "GOBIN")
     ":" (getenv "GOROOT") "/bin"
+    ":" "/usr/local/go/bin"
     ))
 
 (push (getenv "GOBIN") exec-path)
-(push (concat (getenv "GOROOT") "/bin") exec-path)
+;(push (concat (getenv "GOROOT") "/bin") exec-path)
 
 (add-to-list 'load-path (concat my-libs-dir "go-mode"))
 (require 'go-mode)
