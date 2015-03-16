@@ -45,7 +45,7 @@
 ; magic guess
 (setq ido-use-filename-at-point 'guess)
 ; sort buffer
-(setq ido-file-extensions-order '(".el" ".org" ".go" ".pp" ".rb" ".py" ".r" ".c" ".h" ".js" ".xml" ".html" ".txt" ".ini" ".cfg" ".cnf" ".cpp" ".clj" ".java" ".pl"))
+(setq ido-file-extensions-order '(".el" ".org" ".go" ".pp" ".rb" ".py" ".r" ".c" ".h" ".js" ".xml" ".html" ".tmpl" ".txt" ".ini" ".cfg" ".cnf" ".cpp" ".clj" ".java" ".pl"))
 ; get rid of confirmations
 (setq ido-create-new-buffer 'always)
 
