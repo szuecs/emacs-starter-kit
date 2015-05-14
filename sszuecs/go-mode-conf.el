@@ -125,7 +125,8 @@ the `gorename' tool. With FORCE, call `gorename' with the
 ;(require 'go-errcheck)
 
 ;; oracle
-(load-file (concat (getenv "GOPATH") "/src/code.google.com/p/go.tools/cmd/oracle/oracle.el"))
+;(load-file (concat (getenv "GOPATH") "/src/code.google.com/p/go.tools/cmd/oracle/oracle.el"))
+(load-file (concat (getenv "GOPATH") "src/golang.org/x/tools/cmd/oracle/oracle.el"))
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of gofmt
