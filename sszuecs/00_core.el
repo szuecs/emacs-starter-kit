@@ -92,3 +92,8 @@
 
 ;; global key for `multi-occur-in-this-mode' - you should change this.
 (global-set-key (kbd "C-<f2>") 'multi-occur-in-this-mode)
+
+;; install flycheck
+(package-install 'flycheck)
+(global-flycheck-mode)
+
