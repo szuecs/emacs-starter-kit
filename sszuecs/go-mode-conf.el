@@ -153,21 +153,6 @@ the `gorename' tool. With FORCE, call `gorename' with the
     (message (concat "set scope to project: " go-oracle-scope))
     )
   )
-  ;; (setq local-list (split-string
-  ;;              (substring buffer-file-name
-  ;;                         (+ 5 (length (getenv "GOPATH")))
-  ;;                         (length buffer-file-name))
-  ;;              "/")
-  ;;       )
-  ;; (setq local-sublist-a (car local-list) )
-  ;; (setq local-sublist-b (car (cdr local-list)))
-  ;; (setq local-sublist-c (car (cdr (cdr local-list ))))
-  ;; (setq go-oracle-scope
-  ;;  (mapconcat 'identity (list local-sublist-a local-sublist-b local-sublist-c) "/")
-  ;;  )
-  ;;  (message (concat "set scope to project: " go-oracle-scope))
-  ;;  )
-
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of gofmt
