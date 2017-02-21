@@ -1,4 +1,0 @@
-#name : <iframe src=".."></iframe> 
-#key: iframe
-# --
-<iframe src="$1"></iframe>
