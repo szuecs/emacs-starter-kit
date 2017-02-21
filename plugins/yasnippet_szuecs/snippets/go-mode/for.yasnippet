@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # key: for
-# name : for (...; ...; ...) { ... }
+# name: For Index Loop
 # --
-for ${1:i:=1}; ${2:i<10}; ${3:i++} {
+for ${2:i} := 0; $2 < ${1:count}; ${3:$2++} {
     $0
 }
