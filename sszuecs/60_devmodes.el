@@ -83,7 +83,7 @@
 ;; automatically fille comments but no code
 (add-hook 'c-mode-common-hook
               (lambda ()
-                (auto-fill-mode 1)
+                ;(auto-fill-mode 1) ; deactivate auto linebreak
                 (set (make-local-variable 'fill-nobreak-predicate)
                      (lambda ()
                        (not (eq (get-text-property (point) 'face)
