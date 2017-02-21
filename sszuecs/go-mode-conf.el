@@ -1,27 +1,23 @@
+;;; go-mode-conf --- this configures go-mode
+;;; Commentary:
+
+;;; Code:
 ; add to $PATH
 ;(setenv "PATH" (concat (getenv "PATH") ":/usr/lib/go/bin:/usr/local/go/bin:/home/sszuecs/go/bin"))
-(push "/usr/lib/go/bin" exec-path)
-(push "/usr/local/go/bin" exec-path)
-
-;; set ENV
+;(push "/usr/lib/go/bin" exec-path)
+;(push "/usr/local/go/bin" exec-path)
+;;; set ENV
 (setenv "GOPATH" (concat (getenv "HOME") "/go"))
 (setenv "GOBIN" (concat (getenv "GOPATH") "/bin"))
 (setenv "PATH" (concat (getenv "PATH")
     ":" (getenv "GOBIN")
     ":" (getenv "GOROOT") "/bin"
-    ":" "/usr/local/go/bin"
     ))
-
 (push (getenv "GOBIN") exec-path)
-;(push (concat (getenv "GOROOT") "/bin") exec-path)
+(push (concat (getenv "GOROOT") "/bin") exec-path)
 
 (add-to-list 'load-path (concat my-libs-dir "go-mode"))
 (require 'go-mode)
-
-;; use godoc - should be in $PATH
-; M-x godoc
-
-;; godef is part of go
 
 ;; gotests https://github.com/tcnksm/gotests/
 (load-file (concat (getenv "GOPATH") "/src/github.com/tcnksm/gotests/editor/emacs/gotests.el"))
@@ -122,41 +118,38 @@ the `gorename' tool. With FORCE, call `gorename' with the
                             (buffer-substring (point-min) (point-max))))
 
 
-;; syntax check
-;(add-to-list 'load-path (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
-;(require 'go-flymake)
-;; new syntax check
-;(require 'flycheck)
-
-;; go-errcheck - what does it do?
-;(add-to-list 'load-path (concat my-libs-dir "go-errcheck"))
-;(require 'go-errcheck)
-
-;; oracle
-(load-file (concat (getenv "GOPATH") "src/golang.org/x/tools/cmd/oracle/oracle.el"))
 ; set scope for oracle to current project
-(defun set-oracle-scope-for-go-project ()
-  (interactive)
-  (let (
-        (local-list (split-string
-               (substring buffer-file-name
-                          (+ 5 (length (getenv "GOPATH")))
-                          (length buffer-file-name))
-               "/") )
-        (local-sublist-a (car local-list))
-        (local-sublist-b (car (cdr local-list)))
-        (local-sublist-c (car (cdr (cdr local-list ))))
-        )
-    (setq go-oracle-scope
-          (mapconcat 'identity (list local-sublist-a local-sublist-b local-sublist-c) "/")
-          )
-    (message (concat "set scope to project: " go-oracle-scope))
-    )
+;(defun set-oracle-scope-for-go-project ()
+;  (interactive)
+;  (let (
+;        (local-list (split-string
+;               (substring buffer-file-name
+;                          (+ 5 (length (getenv "GOPATH")))
+;                          (length buffer-file-name))
+;               "/") )
+;        (local-sublist-a (car local-list))
+;        (local-sublist-b (car (cdr local-list)))
+;        (local-sublist-c (car (cdr (cdr local-list ))))
+;        )
+;    (setq go-oracle-scope
+;          (mapconcat 'identity (list local-sublist-a local-sublist-b local-sublist-c) "/")
+;          )
+;    (message (concat "set scope to project: " go-oracle-scope))
+;    )
+;  )
+
+;; while browsing src code, I get in never ending hot compile loops,
+;; because of errcheck, so disable it if requested
+(defun disable-flycheck-errcheck ()
+  (flycheck-disable-checker 'go-errcheck)
   )
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of gofmt
   (setq gofmt-command "goimports")
+
+  ;; disable flycheck plugin go-errcheck
+  (local-set-key (kbd "F4") 'disable-flycheck-errcheck)
 
   ;; use gofmt - should be in $PATH
   ; Call Gofmt before saving
@@ -178,14 +171,16 @@ the `gorename' tool. With FORCE, call `gorename' with the
   ; M-. jump to declaration
   ; M-* jump back
   (local-set-key (kbd "M-.") 'godef-jump)
-  ; go-oracle
-  (go-oracle-mode)
-  ;; C-c C-o i ; go-oracle-implements
+  ; go-guru replaces oracle
+  (require 'go-guru)
+  (go-guru-hl-identifier-mode)
+  ;; C-c C-o i ; implements
   ;; C-c C-o < ; callers
   ;; C-c C-o > ; callees
   ;; C-c C-o s ; callstack
   ;; C-c C-o c ; find peer channels
-  (local-set-key (kbd "C-c C-o C-s") 'set-oracle-scope-for-go-project)
+  ; FIXME: set scope for guru
+  ;(local-set-key (kbd "C-c C-o C-s") 'set-oracle-scope-for-go-project)
   ;; C-c C-o C-s ; set oracle scope to current open files
   )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
