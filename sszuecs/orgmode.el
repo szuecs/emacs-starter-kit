@@ -498,7 +498,7 @@ Skips capture tasks and tasks with subtasks"
 ;;; Manpage integration
 ;;; org-man provides links to manpages, example: man:ls
 ;;;
-(add-to-list 'load-path "~/emacs-libs/org-man")
+(add-to-list 'load-path (concat my-libs-dir "org-man"))
 (require 'org-man)
 
 ;
