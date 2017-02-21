@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# uuid: 6B01E886-4CFA-476E-AE01-EFF406116978
+# key: go
+# contributor: Translated from textmate snippet by PROGRAM_NAME
+# name: Goroutine Call
+## condition: "
+# --
+go func(${1:params}) {
+	${0:// body}
+}(${2:${1/(.+)?/(?1:values)/}})
