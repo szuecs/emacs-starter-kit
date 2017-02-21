@@ -48,10 +48,16 @@ Assumes that the frame is only split into two."
           "GOPATH: " (getenv "GOPATH") "\n"
           "GOROOT:" (getenv "GOROOT") "\n"
           "GOBIN:" (getenv "GOBIN") ))
-  (print exec-path)
-  )
+  (print exec-path))
+
+(defun copy-full-path-to-kill-ring ()
+  "copy buffer's full path to kill ring"
+  (interactive)
+  (when buffer-file-name
+    (kill-new (file-truename buffer-file-name))))
 
 
-;; bidings
+;; bindings
 (global-set-key (kbd "C-x 5") 'window-toggle-split-direction)
 ;(global-set-key (kbd "C-x 5") 'toggle-frame-split)
+(global-set-key (kbd "C-c k") 'copy-full-path-to-kill-ring)
