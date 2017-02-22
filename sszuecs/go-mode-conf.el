@@ -141,6 +141,7 @@ the `gorename' tool. With FORCE, call `gorename' with the
 ;; while browsing src code, I get in never ending hot compile loops,
 ;; because of errcheck, so disable it if requested
 (defun disable-flycheck-errcheck ()
+  (interactive)
   (flycheck-disable-checker 'go-errcheck)
   )
 
@@ -149,7 +150,7 @@ the `gorename' tool. With FORCE, call `gorename' with the
   (setq gofmt-command "goimports")
 
   ;; disable flycheck plugin go-errcheck
-  (local-set-key (kbd "F4") 'disable-flycheck-errcheck)
+  (local-set-key (kbd "<f4>") 'disable-flycheck-errcheck)
 
   ;; use gofmt - should be in $PATH
   ; Call Gofmt before saving
