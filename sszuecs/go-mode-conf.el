@@ -9,6 +9,7 @@
 ;;; set ENV
 (setenv "GOPATH" (concat (getenv "HOME") "/go"))
 (setenv "GOBIN" (concat (getenv "GOPATH") "/bin"))
+(setenv "GOROOT" "/usr/local/go")
 (setenv "PATH" (concat (getenv "PATH")
     ":" (getenv "GOBIN")
     ":" (getenv "GOROOT") "/bin"
@@ -43,6 +44,26 @@
 (add-to-list 'load-path (concat my-libs-dir "gocode"))
 (require 'go-autocomplete)
 (require 'auto-complete-config)
+
+;; go metalinter
+(add-to-list 'load-path (concat my-libs-dir "flycheck-gometalinter"))
+(require 'flycheck-gometalinter)
+(eval-after-load 'flycheck
+   '(add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))
+;; skips 'vendor' directories and sets GO15VENDOREXPERIMENT=1
+(setq flycheck-gometalinter-vendor t)
+;; only run fast linters
+;(setq flycheck-gometalinter-fast t)
+;; use in tests files
+(setq flycheck-gometalinter-test t)
+;;; disable linters
+;(setq flycheck-gometalinter-disable-linters '("gotype" "gocyclo"))
+;;; Only enable selected linters
+;(setq flycheck-gometalinter-disable-all t)
+(setq flycheck-gometalinter-enable-linters '("deadcode" "aligncheck" "errcheck" "dupl" "interfacer" "unconvert"))
+;; Set different deadline (default: 5s)
+;(setq flycheck-gometalinter-deadline "10s")
+
 
 ;; refactoring using gofmt
 (require 'thingatpt)
