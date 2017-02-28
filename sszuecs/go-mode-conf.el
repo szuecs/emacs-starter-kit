@@ -9,7 +9,6 @@
 ;;; set ENV
 (setenv "GOPATH" (concat (getenv "HOME") "/go"))
 (setenv "GOBIN" (concat (getenv "GOPATH") "/bin"))
-(setenv "GOROOT" "/usr/local/go")
 (setenv "PATH" (concat (getenv "PATH")
     ":" (getenv "GOBIN")
     ":" (getenv "GOROOT") "/bin"
@@ -57,7 +56,7 @@
 ;; use in tests files
 (setq flycheck-gometalinter-test t)
 ;;; disable linters
-;(setq flycheck-gometalinter-disable-linters '("gotype" "gocyclo"))
+(setq flycheck-gometalinter-disable-linters '("gotype"))
 ;;; Only enable selected linters
 ;(setq flycheck-gometalinter-disable-all t)
 (setq flycheck-gometalinter-enable-linters '("deadcode" "aligncheck" "errcheck" "dupl" "interfacer" "unconvert"))
