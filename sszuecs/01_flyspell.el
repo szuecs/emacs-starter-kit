@@ -15,4 +15,4 @@
 (global-set-key [f8] 'cycle-ispell-languages)
 
 ; disable flyspell-mode
-(setq flyspell-mode nil)
+;(setq flyspell-mode nil)

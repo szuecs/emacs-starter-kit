@@ -95,5 +95,8 @@
 
 ;; install flycheck
 (package-install 'flycheck)
-(global-flycheck-mode)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+; run on save
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
 
+;
