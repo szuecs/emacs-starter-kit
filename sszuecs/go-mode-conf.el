@@ -165,25 +165,25 @@ the `gorename' tool. With FORCE, call `gorename' with the
                             (buffer-substring (point-min) (point-max))))
 
 
-; set scope for oracle to current project
-;(defun set-oracle-scope-for-go-project ()
-;  (interactive)
-;  (let (
-;        (local-list (split-string
-;               (substring buffer-file-name
-;                          (+ 5 (length (getenv "GOPATH")))
-;                          (length buffer-file-name))
-;               "/") )
-;        (local-sublist-a (car local-list))
-;        (local-sublist-b (car (cdr local-list)))
-;        (local-sublist-c (car (cdr (cdr local-list ))))
-;        )
-;    (setq go-oracle-scope
-;          (mapconcat 'identity (list local-sublist-a local-sublist-b local-sublist-c) "/")
-;          )
-;    (message (concat "set scope to project: " go-oracle-scope))
-;    )
-;  )
+; set scope for guru to current project
+(defun set-guru-scope-for-go-project ()
+ (interactive)
+ (let (
+       (local-list (split-string
+              (substring buffer-file-name
+                         (+ 5 (length (getenv "GOPATH")))
+                         (length buffer-file-name))
+              "/") )
+       (local-sublist-a (car local-list))
+       (local-sublist-b (car (cdr local-list)))
+       (local-sublist-c (car (cdr (cdr local-list ))))
+       )
+   (setq go-guru-set-scope
+         (mapconcat 'identity (list local-sublist-a local-sublist-b local-sublist-c) "/")
+         )
+   (message (concat "set scope to project: " go-guru-set-scope))
+   )
+ )
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of gofmt
@@ -220,7 +220,10 @@ the `gorename' tool. With FORCE, call `gorename' with the
   ;; C-c C-o s ; callstack
   ;; C-c C-o c ; find peer channels
   ; FIXME: set scope for guru
-  ;(local-set-key (kbd "C-c C-o C-s") 'set-oracle-scope-for-go-project)
-  ;; C-c C-o C-s ; set oracle scope to current open files
+  ;; C-c C-o C-s ; set go-guru scope to current open files
+  (local-set-key (kbd "C-c C-o C-s") 'set-guru-scope-for-go-project)
   )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
+
+(provide 'go-mode-conf)
+;;; go-mode-conf.el ends here
