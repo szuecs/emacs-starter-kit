@@ -1,5 +1,5 @@
 ;; auctex
-(setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/texbin:/usr/local/texlive/2016/bin/x86_64-darwin"))
 ;; http://emacswiki.org/emacs/AUCTeX
 (setq TeX-auto-save t)
 (setq TeX-save-query nil)

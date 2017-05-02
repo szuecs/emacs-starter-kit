@@ -67,29 +67,30 @@
 (defun toggle-gometalinter ()
   (interactive)
   (if flycheck-gometalinter-enable-linters
-      (setq flycheck-gometalinter-enable-linters nil)
+      (progn
+        (princ "disabled gometalinter")
+        (setq flycheck-gometalinter-enable-linters nil))
     (setq flycheck-gometalinter-enable-linters
-        '(
-        "aligncheck"
-        "deadcode"
-        "dupl"
-        "errcheck"
-        "gas"
-        "goconst"
-        "golint"   ;; replaced require 'golint
-        "gosimple"
-        "gotype"
-        "ineffassign"
-        "interfacer"
-        "misspell"
-        "safesql"
-        "staticcheck"
-        "structcheck"
-        "unconvert"
-        "unparam"
-        "unused"
-        "varcheck"))))
-
+          '(
+            "aligncheck"
+            "deadcode"
+            "dupl"
+            "errcheck"
+            "gas"
+            "goconst"
+            "golint"   ;; replaced require 'golint
+            "gosimple"
+            "gotype"
+            "ineffassign"
+            "interfacer"
+            "misspell"
+            "safesql"
+            "staticcheck"
+            "structcheck"
+            "unconvert"
+            "unparam"
+            "unused"
+            "varcheck"))))
 
 ;; refactoring using gofmt
 (require 'thingatpt)
@@ -209,8 +210,9 @@ the `gorename' tool. With FORCE, call `gorename' with the
            "go build -v && go test -v && go vet"))
   ;; use godef - should be in $PATH
   ; M-. jump to declaration
-  ; M-* jump back
   (local-set-key (kbd "M-.") 'godef-jump)
+  ; M-* jump back
+  (local-set-key (kbd "M-*") 'pop-tag-mark)
   ; go-guru replaces oracle
   (require 'go-guru)
   (go-guru-hl-identifier-mode)
