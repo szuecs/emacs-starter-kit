@@ -8,7 +8,7 @@
 ;; disable flyspell
 (setq flyspell-mode nil)
 
-(add-to-list 'load-path "~/emacs-libs/expand-region")
+(add-to-list 'load-path (concat my-libs-dir "expand-region"))
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
@@ -17,8 +17,8 @@
 (setq-default show-trailing-whitespace t)
 
 ;;; auto completion
-(add-to-list 'load-path "~/emacs-libs/popup")
-(add-to-list 'load-path "~/emacs-libs/auto-complete")
+(add-to-list 'load-path (concat my-libs-dir "popup"))
+(add-to-list 'load-path (concat my-libs-dir "auto-complete"))
 (require 'auto-complete-config)
 (ac-config-default)
 (global-auto-complete-mode nil)
@@ -44,6 +44,16 @@
 
 ; cc-mode
 (add-to-list 'auto-mode-alist '("\\.ext\\'" . c-mode))
+; linux kernel style
+(defun c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+         (column (c-langelem-2nd-pos c-syntactic-element))
+         (offset (- (1+ column) anchor))
+         (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
 (add-hook 'c-mode-common-hook '(lambda ()
           ;; ac-omni-completion-sources is made buffer local so
           ;; you need to add it to a mode hook to activate on
@@ -78,13 +88,32 @@
           (setq c-default-style '((java-mode . "java")
                                   (awk-mode . "awk")
                                   (other . "gnu")))
-          (setq c-basic-offset 4)
-  ))
+          ;(setq c-basic-offset 4)
+          ;; Add kernel style
+          (c-add-style
+           "linux-tabs-only"
+           '("linux" (c-offsets-alist
+                      (arglist-cont-nonempty
+                       c-lineup-gcc-asm-reg
+                       c-lineup-arglist-tabs-only))))))
+
 ;; automatically fille comments but no code
 (add-hook 'c-mode-common-hook
-              (lambda ()
+          (lambda ()
+            (let ((filename (buffer-file-name)))
+              ;; Enable kernel mode for the appropriate files
+              (when (and filename
+                         (string-match (expand-file-name "~/src/linux-trees") ;; kernel parent dir
+                                       filename))
+                (setq indent-tabs-mode t)
+                (setq show-trailing-whitespace t)
+                (c-set-style "linux-tabs-only")))
+
                 ;(auto-fill-mode 1) ; deactivate auto linebreak
                 (set (make-local-variable 'fill-nobreak-predicate)
                      (lambda ()
                        (not (eq (get-text-property (point) 'face)
                                 'font-lock-comment-face))))))
+
+(provide '60_devmodes)
+;;; 60_devmodes.el ends here
