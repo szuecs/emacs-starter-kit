@@ -1,11 +1,7 @@
 # -*- mode: snippet -*-
-# uuid: 1D14B92E-8819-11D9-8661-000D93589AF6
 # key: st
-# contributor: Translated from textmate snippet by PROGRAM_NAME
 # name: Struct
-## condition: "
 # --
-struct ${1:${TM_FILENAME/(.+)\..+|.*/(?1:\L$1_t:name)/}}
-{
-	${0:/* data */}
+struct ${1:name} {
+	$0
 };
