@@ -99,4 +99,8 @@
 ; run on save
 (setq flycheck-check-syntax-automatically '(mode-enabled save))
 
+;; enable abbrev-mode for auto-correction
+;; add new entries to the global table with C-x a i g
+(setq default-abbrev-mode t)
+
 ;
