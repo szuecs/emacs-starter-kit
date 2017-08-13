@@ -52,45 +52,72 @@
    '(add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))
 ;; skips 'vendor' directories and sets GO15VENDOREXPERIMENT=1
 (setq flycheck-gometalinter-vendor t)
-;; only run fast linters
-;(setq flycheck-gometalinter-fast t)
+;; only run fast linters:
+;; dupl gas goconst gocyclo gomt goimports
+;; golint gotype ineffassign lll misspell vet vetshadow
+(setq flycheck-gometalinter-fast t)
 ;; use in tests files
 (setq flycheck-gometalinter-test t)
 ;;; disable linters
 ;(setq flycheck-gometalinter-disable-linters '("gotype"))
 ;; Set different deadline (default: 5s)
-(setq flycheck-gometalinter-deadline "10s")
+(setq flycheck-gometalinter-deadline "1s")
 
 ;;; Only enable selected linters
-(setq flycheck-gometalinter-disable-all t)
+;(setq flycheck-gometalinter-disable-all t)
+
+;; (setq flycheck-gometalinter-enable-linters '(
+;;             "aligncheck"
+;;             "deadcode"
+;;             "dupl"
+;;             "gas"
+;;             "goconst"
+;;             "golint"
+;;             "gosimple"
+;;             "gotype"
+;;             "ineffassign"
+;;             "interfacer"
+;;             "misspell"
+;;             "safesql"
+;;             "staticcheck"
+;;             "structcheck"
+;;             "unconvert"
+;;             "unparam"
+;;             "unused"
+;;             "varcheck"
+;;             ))
+
 
 (defun toggle-gometalinter ()
+  "Function toggle-gometalinter enable/disable linters."
   (interactive)
   (if flycheck-gometalinter-enable-linters
       (progn
         (princ "disabled gometalinter")
         (setq flycheck-gometalinter-enable-linters nil))
-    (setq flycheck-gometalinter-enable-linters
-          '(
-            "aligncheck"
-            "deadcode"
-            "dupl"
-            "errcheck"
-            "gas"
-            "goconst"
-            "golint"   ;; replaced require 'golint
-            "gosimple"
-            "gotype"
-            "ineffassign"
-            "interfacer"
-            "misspell"
-            "safesql"
-            "staticcheck"
-            "structcheck"
-            "unconvert"
-            "unparam"
-            "unused"
-            "varcheck"))))
+    (progn
+      (princ "enabled gometalinter")
+      (setq flycheck-gometalinter-enable-linters
+            '(
+              "aligncheck"
+              "deadcode"
+              "dupl"
+              "errcheck"
+              "gas"
+              "goconst"
+              "golint"   ;; replaced require 'golint
+              "gosimple"
+              "gotype"
+              "ineffassign"
+              "interfacer"
+              "misspell"
+              "safesql"
+              "staticcheck"
+              "structcheck"
+              "unconvert"
+              "unparam"
+              "unused"
+              "varcheck")))))
 
 ;; refactoring using gofmt
 (require 'thingatpt)
