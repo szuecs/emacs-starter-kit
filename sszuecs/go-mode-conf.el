@@ -93,10 +93,13 @@
   (interactive)
   (if flycheck-gometalinter-enable-linters
       (progn
-        (princ "disabled gometalinter")
-        (setq flycheck-gometalinter-enable-linters nil))
+        (princ "degraded gometalinter to only fast linters")
+        (setq flycheck-gometalinter-enable-linters nil)
+        (setq flycheck-gometalinter-fast t)
+        (setq flycheck-gometalinter-deadline "1s")
+        )
     (progn
-      (princ "enabled gometalinter")
+      (princ "enabled all linters gometalinter")
       (setq flycheck-gometalinter-enable-linters
             '(
               "aligncheck"
@@ -129,9 +132,7 @@
   :type 'string
   :group 'go-rename)
 (defun go-rename (new-name &optional force)
-  "Rename the entity denoted by the identifier at point, using
-the `gorename' tool. With FORCE, call `gorename' with the
-`-force' flag."
+  "Rename the entity denoted by the identifier at point to NEW-NAME.  It will use the `gorename' tool.  With FORCE, call `gorename' with the `-force' flag."
   (interactive (list (read-string "New name: " (thing-at-point 'symbol))
                      current-prefix-arg))
   (if (not buffer-file-name)
@@ -195,13 +196,14 @@ the `gorename' tool. With FORCE, call `gorename' with the
 
 ; set scope for guru to current project
 (defun set-guru-scope-for-go-project ()
+  "Set the guru scope for your project."
  (interactive)
- (let (
+ (let* (
        (local-list (split-string
               (substring buffer-file-name
-                         (+ 5 (length (getenv "GOPATH")))
+                         (+ 5 (length (getenv "GOPATH"))) ; 5 bc "/src/"
                          (length buffer-file-name))
-              "/") )
+              "/"))
        (local-sublist-a (car local-list))
        (local-sublist-b (car (cdr local-list)))
        (local-sublist-c (car (cdr (cdr local-list ))))
@@ -214,6 +216,7 @@ the `gorename' tool. With FORCE, call `gorename' with the
  )
 
 (defun my-go-mode-hook ()
+  "Hook to configure the go-mode."
   ; Use goimports instead of gofmt
   (setq gofmt-command "goimports")
 
