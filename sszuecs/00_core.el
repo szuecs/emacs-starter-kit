@@ -52,6 +52,9 @@
 ; tramp
 (setq tramp-default-method "ssh")
 
+; shell command on region - similar to %! in vim
+(global-set-key (kbd "C-x !") 'shell-command-on-region)
+
 ; use tex style input methods, such that we can use utf-8 chars easily
 (set-input-method "TeX")
   ; you have to (toggle-input-method) if you want to use TeX style input method
@@ -103,4 +106,11 @@
 ;; add new entries to the global table with C-x a i g
 (setq default-abbrev-mode t)
 
-;
+;; dired key strokes
+(global-set-key (kbd "C-S-g") 'find-grep-dired)
+
+;; copy buffer absolute filepath into killring
+(defun filename ()
+    "Copy the full path of the current buffer."
+    (interactive)
+    (kill-new (buffer-file-name (window-buffer (minibuffer-selected-window)))))
