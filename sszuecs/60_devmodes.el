@@ -17,8 +17,8 @@
 (setq-default show-trailing-whitespace t)
 
 ;;; auto completion
-(add-to-list 'load-path (concat my-libs-dir "popup"))
-(add-to-list 'load-path (concat my-libs-dir "auto-complete"))
+;(add-to-list 'load-path (concat my-libs-dir "popup"))
+;(add-to-list 'load-path (concat my-libs-dir "auto-complete"))
 (require 'auto-complete-config)
 (ac-config-default)
 (global-auto-complete-mode nil)
