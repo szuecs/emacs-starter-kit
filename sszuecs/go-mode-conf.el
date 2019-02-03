@@ -22,11 +22,6 @@
 ; C-c C-f d ; jumpto and add docstring
 ; C-c C-f f ; jumpto function
 
-
-;; golint
-;; (add-to-list 'load-path (concat (getenv "GOPATH") "/src/github.com/golang/lint/misc/emacs"))
-;; (require 'golint)
-
 ;; go eldoc
 (add-to-list 'load-path (concat my-libs-dir "go-eldoc"))
 (require 'go-eldoc)
@@ -40,20 +35,11 @@
 ; export GOPATH=$HOME/go
 ; export GOBIN=$GOPATH/bin
 ; PATH=${PATH}:${GOROOT}/bin:${GOPATH}/bin
-; % go get -u -v github.com/nsf/gocode
-; % go install github.com/nsf/gocode
+; % go get -u github.com/mdempsky/gocode
 (add-to-list 'load-path (concat my-libs-dir "gocode"))
 (require 'go-autocomplete)
 (require 'auto-complete-config)
-
-;; flycheck golangci integration
-;; install: M-x package-install flycheck-golangci-lint
-;; - https://github.com/golangci/golangci-lint
-;; - https://github.com/weijiangan/flycheck-golangci-lint
-; (eval-after-load 'flycheck
-;   '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
-
-
+(ac-config-default)
 
 ;; refactoring using gofmt
 (require 'thingatpt)
@@ -163,9 +149,13 @@
   ; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
 
+  ;; flycheck golangci integration
+  ;; install: M-x package-install flycheck-golangci-lint
+  ;; - https://github.com/golangci/golangci-lint
+  ;; - https://github.com/weijiangan/flycheck-golangci-lint
   (add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup)
   (setq flycheck-golangci-lint-config (concat (getenv "HOME") "/.golangci.yml"))
-  ;; (setq flycheck-golangci-lint-deadline "1m")
+  (setq flycheck-golangci-lint-deadline "30s")
   ;; (setq flycheck-golangci-lint-tests t)
   ;; (setq flycheck-golangci-lint-fast t)
 
