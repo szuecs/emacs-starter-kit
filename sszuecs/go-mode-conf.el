@@ -30,6 +30,14 @@
                     :underline t :foreground "forestgreen"
                     :weight 'bold)
 
+;; test lsp-mode
+;; installed lsp-mode lsp-ui lsp-go via melpa
+;(require 'lsp-mode)
+;(add-hook 'go-mode-hook #'lsp)
+;(require 'lsp-ui)
+;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+;(add-hook 'go-mode-hook 'flycheck-mode)
+
 ;; autocomplete
 ; export GOROOT=/usr/lib/go
 ; export GOPATH=$HOME/go
@@ -187,12 +195,6 @@
       (set (make-local-variable 'compile-command)
            "go build -v && go test -v && go vet"))
 
-  ;; use godef - should be in $PATH
-  ; M-. jump to declaration
-  (local-set-key (kbd "M-.") 'godef-jump)
-  ; M-* jump back
-  (local-set-key (kbd "M-*") 'pop-tag-mark)
-
   ; go-guru replaces oracle
   (require 'go-guru)
   (go-guru-hl-identifier-mode)
@@ -204,6 +206,14 @@
   ; FIXME: set scope for guru
   ;; C-c C-o C-s ; set go-guru scope to current open files
   (local-set-key (kbd "C-c C-o C-s") 'set-guru-scope-for-go-project)
+
+  ;; use godef - should be in $PATH
+  ; M-. jump to declaration
+  (local-set-key (kbd "M-.") 'go-guru-definition)
+  ;(local-set-key (kbd "M-.") 'godef-jump)
+  ; M-* jump back
+  (local-set-key (kbd "M-*") 'pop-tag-mark)
+
   )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
