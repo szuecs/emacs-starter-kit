@@ -37,6 +37,10 @@
 ;(require 'lsp-ui)
 ;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
 ;(add-hook 'go-mode-hook 'flycheck-mode)
+;(lsp-register-client
+;   (make-lsp-client :new-connection (lsp-stdio-connection "gopls")
+;                    :major-modes '(go-mode)
+;                    :server-id 'gopls))
 
 ;; autocomplete
 ; export GOROOT=/usr/lib/go
@@ -209,8 +213,8 @@
 
   ;; use godef - should be in $PATH
   ; M-. jump to declaration
-  (local-set-key (kbd "M-.") 'go-guru-definition)
-  ;(local-set-key (kbd "M-.") 'godef-jump)
+  ;(local-set-key (kbd "M-.") 'go-guru-definition)
+  (local-set-key (kbd "M-.") 'godef-jump)
   ; M-* jump back
   (local-set-key (kbd "M-*") 'pop-tag-mark)
 
