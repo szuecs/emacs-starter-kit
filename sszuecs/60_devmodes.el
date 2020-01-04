@@ -42,6 +42,8 @@
 (add-to-list 'load-path (concat my-libs-dir "less-css-mode"))
 (require 'less-css-mode)
 
+; cpp-mode
+(add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-mode))
 ; cc-mode
 (add-to-list 'auto-mode-alist '("\\.ext\\'" . c-mode))
 ; linux kernel style
